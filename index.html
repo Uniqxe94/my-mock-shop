@@ -3,140 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uniqxe Shop - Automation Practice</title>
+    <title>Uniqxe Shop - Premium Automation Practice</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        /* ธีมสีเขียวมิ้นต์อ่อนตามสั่ง */
-        .mint-bg { background-color: #e8f5e9; } /* สีพื้นหลังหลัก */
-        .mint-accent { background-color: #a5d6a7; } /* สีปุ่ม / บาร์ */
-        .mint-accent-hover:hover { background-color: #81c784; }
+        /* ธีมสีเขียวมิ้นต์อ่อน (Mint Green & Black) */
+        .mint-bg { background-color: #f1f8e9; }
+        .mint-main { background-color: #e8f5e9; }
+        .mint-accent { background-color: #a5d6a7; }
+        .mint-btn:hover { background-color: #81c784; }
         .hidden { display: none; }
+        .cart-badge { position: absolute; top: -5px; right: -8px; background: #ff5252; color: white; border-radius: 50%; padding: 1px 5px; font-size: 10px; font-weight: bold; }
     </style>
 </head>
-<body class="bg-slate-50 min-h-screen">
+<body class="mint-bg min-h-screen font-sans text-black">
 
-    <nav id="user-navbar" class="mint-accent text-black p-4 shadow-sm hidden sticky top-0 z-50">
-        <div class="max-w-4xl mx-auto flex justify-between items-center">
-            <div id="web-logo" class="font-bold text-2xl tracking-wide cursor-pointer" onclick="goToHome()">Uniqxe Shop</div>
-            <div class="flex items-center gap-4">
-                <span id="nav-user-info" class="text-sm">
-                    คุณ: <button id="btn-view-profile" onclick="showView('profile')" class="font-bold underline hover:text-gray-700 cursor-pointer"></button>
-                </span>
-                <button id="btn-logout" onclick="logout()" class="bg-black text-white px-3 py-1 rounded-md text-sm font-medium hover:bg-gray-800 transition">ออกจากระบบ</button>
+    <nav id="user-navbar" class="mint-accent text-black p-4 shadow-sm sticky top-0 z-50 hidden">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div id="web-logo" class="font-bold text-2xl tracking-tighter cursor-pointer" onclick="showView('shop')">Uniqxe Shop</div>
+            
+            <div class="flex items-center gap-6">
+                <div class="relative cursor-pointer" id="btn-cart-modal" onclick="showView('cart')">
+                    <i class="fa-solid fa-cart-shopping text-xl"></i>
+                    <span id="cart-badge-count" class="cart-badge">0</span>
+                </div>
+                
+                <div class="flex items-center gap-4 border-l border-green-400 pl-6">
+                    <span class="text-sm">คุณ: <button id="btn-view-profile" onclick="showView('profile')" class="font-bold underline hover:text-gray-700"></button></span>
+                    <button id="btn-logout" onclick="logout()" class="bg-black text-white px-3 py-1.5 rounded-md text-xs font-bold hover:bg-gray-800 transition">ออกจากระบบ</button>
+                </div>
             </div>
         </div>
     </nav>
 
-    <div class="max-w-xl mx-auto mt-10 p-4">
+    <div class="max-w-6xl mx-auto p-4">
         
-        <div id="view-login" class="bg-white p-8 rounded-lg shadow-md border border-gray-100">
-            <h2 class="text-2xl font-bold mb-6 text-center text-black">เข้าสู่ระบบ | Uniqxe Shop</h2>
-            <div id="login-error" class="text-red-500 text-sm mb-4 text-center font-semibold"></div>
-            
+        <div id="view-login" class="max-w-md mx-auto mt-20 bg-white p-8 rounded-2xl shadow-xl">
+            <h2 class="text-3xl font-bold mb-6 text-center">Login</h2>
+            <div id="login-error" class="text-red-500 text-sm mb-4 text-center font-bold"></div>
             <div class="space-y-4">
-                <input id="login-username" type="text" placeholder="ชื่อผู้ใช้ (Username)" class="w-full border p-2 rounded focus:outline-none focus:ring-2 focus:ring-green-300">
-                <input id="login-password" type="password" placeholder="รหัสผ่าน (Password)" class="w-full border p-2 rounded focus:outline-none focus:ring-2 focus:ring-green-300">
-                <button id="btn-login" onclick="login()" class="w-full mint-accent text-black font-bold py-2 rounded mint-accent-hover transition">ล็อกอิน</button>
+                <input id="login-username" type="text" placeholder="Username" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-green-400 outline-none">
+                <input id="login-password" type="password" placeholder="Password" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-green-400 outline-none">
+                <button id="btn-login" onclick="login()" class="w-full bg-black text-white font-bold py-3 rounded-lg hover:bg-gray-800 transition">เข้าสู่ระบบ</button>
             </div>
-            
-            <div class="mt-6 text-center text-sm text-gray-500">
-                ยังไม่มีบัญชี? <button id="btn-go-register" onclick="showView('register')" class="text-blue-600 hover:underline">สมัครสมาชิกที่นี่</button>
-            </div>
+            <p class="mt-6 text-center text-sm">ยังไม่มีบัญชี? <button id="btn-go-register" onclick="showView('register')" class="text-green-700 font-bold underline">สมัครสมาชิก</button></p>
         </div>
 
-        <div id="view-register" class="bg-white p-8 rounded-lg shadow-md border border-gray-100 hidden">
-            <h2 class="text-2xl font-bold mb-6 text-center text-black">สมัครสมาชิกใหม่</h2>
-            <div id="reg-error" class="text-red-500 text-sm mb-4 text-center font-semibold"></div>
-            
+        <div id="view-register" class="max-w-lg mx-auto mt-10 bg-white p-8 rounded-2xl shadow-xl hidden">
+            <h2 class="text-2xl font-bold mb-6 text-center">สมัครสมาชิกใหม่</h2>
+            <div id="reg-error" class="text-red-500 text-sm mb-4 text-center font-bold"></div>
+            <div class="grid grid-cols-2 gap-3 mb-3">
+                <input id="reg-firstname" type="text" placeholder="ชื่อจริง" class="border p-2.5 rounded-lg">
+                <input id="reg-lastname" type="text" placeholder="นามสกุล" class="border p-2.5 rounded-lg">
+            </div>
+            <div class="p-3 border rounded-lg mb-3 bg-gray-50">
+                <span class="text-xs text-gray-500 block mb-1">เลือกเพศ</span>
+                <div class="flex gap-4 text-sm">
+                    <label class="cursor-pointer"><input type="radio" name="gender" value="ชาย" checked> ชาย</label>
+                    <label class="cursor-pointer"><input type="radio" name="gender" value="หญิง"> หญิง</label>
+                    <label class="cursor-pointer"><input type="radio" name="gender" value="อื่นๆ"> อื่นๆ</label>
+                </div>
+            </div>
             <div class="space-y-3">
-                <div class="grid grid-cols-2 gap-2">
-                    <input id="reg-firstname" type="text" placeholder="ชื่อจริง (First Name)" class="border p-2 rounded">
-                    <input id="reg-lastname" type="text" placeholder="นามสกุล (Last Name)" class="border p-2 rounded">
-                </div>
-                
-                <div class="p-2 border rounded bg-gray-50">
-                    <span class="block text-sm text-gray-600 mb-1 font-medium">เพศ (Gender):</span>
-                    <div class="flex gap-4 text-sm">
-                        <label class="flex items-center gap-1 cursor-pointer">
-                            <input type="radio" name="gender" value="ชาย" id="gender-male" checked> ชาย
-                        </label>
-                        <label class="flex items-center gap-1 cursor-pointer">
-                            <input type="radio" name="gender" value="หญิง" id="gender-female"> หญิง
-                        </label>
-                        <label class="flex items-center gap-1 cursor-pointer">
-                            <input type="radio" name="gender" value="อื่นๆ" id="gender-other"> อื่นๆ
-                        </label>
-                    </div>
-                </div>
-
-                <input id="reg-username" type="text" placeholder="Username (ตั้งชื่อผู้ใช้)" class="w-full border p-2 rounded">
-                <input id="reg-password" type="password" placeholder="Password" class="w-full border p-2 rounded">
-                <input id="reg-confirm-password" type="password" placeholder="Confirm Password" class="w-full border p-2 rounded">
-                <input id="reg-phone" type="text" placeholder="เบอร์โทรศัพท์" class="w-full border p-2 rounded">
-                <input id="reg-email" type="email" placeholder="อีเมล" class="w-full border p-2 rounded">
-                
-                <button id="btn-register" onclick="register()" class="w-full mint-accent text-black font-bold py-2 rounded mint-accent-hover transition shadow-sm">ยืนยันการสมัคร</button>
-                <button id="btn-back-login" onclick="showView('login')" class="w-full text-gray-500 text-sm mt-2 hover:underline">ย้อนกลับไปหน้าล็อกอิน</button>
+                <input id="reg-username" type="text" placeholder="Username" class="w-full border p-2.5 rounded-lg">
+                <input id="reg-password" type="password" placeholder="Password" class="w-full border p-2.5 rounded-lg">
+                <input id="reg-confirm-password" type="password" placeholder="Confirm Password" class="w-full border p-2.5 rounded-lg">
+                <input id="reg-phone" type="text" placeholder="เบอร์โทรศัพท์" class="w-full border p-2.5 rounded-lg">
+                <input id="reg-email" type="email" placeholder="อีเมล" class="w-full border p-2.5 rounded-lg">
+                <button id="btn-register" onclick="register()" class="w-full mint-accent font-bold py-3 rounded-lg hover:opacity-80 transition">ยืนยันสมัครสมาชิก</button>
+                <button onclick="showView('login')" class="w-full text-xs text-gray-500 underline mt-2">กลับไปหน้าล็อกอิน</button>
             </div>
         </div>
 
-        <div id="view-user-shop" class="bg-white p-8 rounded-lg shadow-md border border-gray-100 hidden">
-            <h2 class="text-2xl font-bold mb-4 text-black">สินค้าแนะนำสำหรับคุณ</h2>
-            <div class="mint-bg border-2 border-dashed border-green-200 p-10 text-center text-gray-600 rounded-lg">
-                <p class="font-medium">ยินดีต้อนรับสู่ Uniqxe Shop 🍵</p>
-                <p class="text-xs text-gray-400 mt-2">พื้นที่จำลองการซื้อของเพื่อทำ Automation Testing</p>
-            </div>
+        <div id="view-shop" class="mt-4 hidden">
+            <h2 class="text-2xl font-bold mb-6">รายการสินค้าทั้งหมด</h2>
+            <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                </div>
         </div>
 
-        <div id="view-profile" class="bg-white p-8 rounded-lg shadow-md border border-gray-100 hidden">
-            <h2 class="text-2xl font-bold mb-4 text-black border-b pb-2">ข้อมูลโปรไฟล์ส่วนตัวของคุณ</h2>
-            
-            <div class="space-y-3 text-sm text-gray-700">
-                <p><b>ชื่อ - นามสกุล:</b> <span id="prof-fullname"></span></p>
+        <div id="view-cart" class="max-w-2xl mx-auto mt-10 bg-white p-8 rounded-2xl shadow-xl hidden">
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-2"><i class="fa-solid fa-cart-shopping"></i> ตะกร้าของคุณ</h2>
+            <div id="cart-items-container" class="space-y-4 mb-6">
+                </div>
+            <div class="border-t pt-4 flex justify-between items-center font-bold text-xl">
+                <span>ราคารวมทั้งหมด:</span>
+                <span id="cart-total-price" class="text-green-700">฿0</span>
+            </div>
+            <button id="btn-checkout" onclick="alert('ขอบคุณที่สั่งซื้อ! (ระบบจำลองการชำระเงิน)')" class="w-full bg-black text-white font-bold py-3 rounded-lg mt-6 hover:bg-gray-800 transition">เริ่มสั่งซื้อสินค้า</button>
+            <button onclick="showView('shop')" class="w-full text-sm text-gray-500 mt-4 underline">กลับไปเลือกสินค้าเพิ่ม</button>
+        </div>
+
+        <div id="view-profile" class="max-w-md mx-auto mt-10 bg-white p-8 rounded-2xl shadow-xl hidden">
+            <h2 class="text-2xl font-bold mb-6 border-b pb-2">โปรไฟล์ของฉัน</h2>
+            <div class="space-y-4 text-gray-700">
+                <p><b>ชื่อ-นามสกุล:</b> <span id="prof-fullname"></span></p>
                 <p><b>เพศ:</b> <span id="prof-gender"></span></p>
-                <p><b>ชื่อผู้ใช้ (Username):</b> <span id="prof-username"></span></p>
-                <p><b>เบอร์โทรศัพท์:</b> <span id="prof-phone"></span></p>
+                <p><b>Username:</b> <span id="prof-username"></span></p>
+                <p><b>เบอร์โทร:</b> <span id="prof-phone"></span></p>
                 <p><b>อีเมล:</b> <span id="prof-email"></span></p>
             </div>
-            
-            <button id="btn-profile-back" onclick="showView('shop')" class="w-full mt-6 bg-gray-200 text-black py-2 rounded hover:bg-gray-300 transition text-sm font-medium">กลับสู่หน้าหลัก</button>
+            <button onclick="showView('shop')" class="w-full mt-8 bg-gray-100 py-2 rounded-lg font-bold">กลับไปหน้าหลัก</button>
         </div>
 
-    </div>
-
-    <div id="view-admin-dashboard" class="max-w-4xl mx-auto mt-10 p-4 hidden">
-        <div class="bg-white p-8 rounded-lg shadow-md border border-gray-100">
-            <h2 class="text-2xl font-bold mb-6 text-black flex items-center gap-2">
-                <span class="bg-green-100 p-2 rounded-full">🛡️</span> Admin Management Dashboard
-            </h2>
-            
-            <div class="overflow-x-auto">
+        <div id="view-admin" class="mt-10 hidden">
+            <div class="bg-white p-8 rounded-2xl shadow-xl overflow-x-auto">
+                <h2 class="text-2xl font-bold mb-6 text-red-600 font-mono">🛡️ Admin Dashboard</h2>
                 <table class="w-full text-left border-collapse">
                     <thead>
-                        <tr class="mint-bg text-black text-sm font-bold">
+                        <tr class="bg-gray-100 text-sm">
                             <th class="p-3 border">ชื่อ-นามสกุล</th>
                             <th class="p-3 border">Username</th>
-                            <th class="p-3 border">เพศ</th>
-                            <th class="p-3 border">เบอร์โทร</th>
-                            <th class="p-3 border">อีเมล</th>
                             <th class="p-3 border">จัดการ</th>
                         </tr>
                     </thead>
-                    <tbody id="admin-user-table-body"></tbody>
+                    <tbody id="admin-user-table"></tbody>
                 </table>
             </div>
         </div>
+
     </div>
 
     <script>
-        // บัญชี Admin ตั้งต้น
-        if (!localStorage.getItem('user_admin')) {
+        // --- DATA: 20 PRODUCTS ---
+        const PRODUCTS = [
+            { id: 1, name: "Vespa Sprint 150", price: 1500, detail: "โมเดลรถจิ๋วสีมิ้นต์สุดคลาสสิก", img: "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=300" },
+            { id: 2, name: "Mechanical Keyboard", price: 2900, detail: "คีย์บอร์ดเสียงเพราะ พิมพ์สนุก", img: "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=300" },
+            { id: 3, name: "Matcha Whisk Set", price: 850, detail: "ชุดชงมัทฉะครบเซ็ต สไตล์ญี่ปุ่น", img: "https://images.unsplash.com/photo-1582793988951-9aed55099991?w=300" },
+            { id: 4, name: "Minimalist Lamp", price: 1200, detail: "โคมไฟตั้งโต๊ะ แสงวอร์มไวท์", img: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=300" },
+            { id: 5, name: "Ceramic Coffee Cup", price: 350, detail: "แก้วเซรามิกแฮนด์เมด สีเขียวอ่อน", img: "https://images.unsplash.com/photo-1514218953589-2d7d37efd2ec?w=300" },
+            { id: 6, name: "Analog Wristwatch", price: 4500, detail: "นาฬิกาสายหนัง เรียบหรูดูดี", img: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=300" },
+            { id: 7, name: "Cotton Tote Bag", price: 250, detail: "กระเป๋าผ้ารักษ์โลก จุของได้เยอะ", img: "https://images.unsplash.com/photo-1544816155-12df9643f363?w=300" },
+            { id: 8, name: "Wireless Earbuds", price: 1900, detail: "หูฟังไร้สาย เบสหนัก ตัดเสียงรบกวน", img: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=300" },
+            { id: 9, name: "Planner Notebook", price: 490, detail: "สมุดจดบันทึก ปกหนังเทียม", img: "https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=300" },
+            { id: 10, name: "Green Tea Scented Candle", price: 390, detail: "เทียนหอมกลิ่นชาเขียว ผ่อนคลาย", img: "https://images.unsplash.com/photo-1603006905003-be475563bc59?w=300" },
+            { id: 11, name: "Succulent Pot", price: 120, detail: "ต้นไม้จิ๋ว ประดับโต๊ะทำงาน", img: "https://images.unsplash.com/photo-1509423350716-97f9360b4e09?w=300" },
+            { id: 12, name: "Leather Wallet", price: 890, detail: "กระเป๋าสตางค์ใบสั้น ทนทาน", img: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=300" },
+            { id: 13, name: "Glass Water Bottle", price: 450, detail: "ขวดน้ำแก้ว ทนความร้อน", img: "https://images.unsplash.com/photo-1602143303707-e41713f3e797?w=300" },
+            { id: 14, name: "Eco-friendly Pen", price: 50, detail: "ปากกาลูกลื่น ทำจากวัสดุรีไซเคิล", img: "https://images.unsplash.com/photo-1585336139118-132f507ad742?w=300" },
+            { id: 15, name: "Desk Mat (Mint)", price: 650, detail: "แผ่นรองโต๊ะขนาดใหญ่ สีเขียวมิ้นต์", img: "https://images.unsplash.com/photo-1616627547584-bf28cee262db?w=300" },
+            { id: 16, name: "Canvas Sneakers", price: 1250, detail: "รองเท้าผ้าใบ สวมใส่สบาย", img: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=300" },
+            { id: 17, name: "Table Fan (Portable)", price: 790, detail: "พัดลมพกพา ชาร์จ USB ได้", img: "https://images.unsplash.com/photo-1618944847023-38aa001235f0?w=300" },
+            { id: 18, name: "Coffee Dripper", price: 550, detail: "อุปกรณ์ดริปกาแฟ เซรามิกขาว", img: "https://images.unsplash.com/photo-1544787210-2213d84ad96b?w=300" },
+            { id: 19, name: "Sunglasses", price: 1100, detail: "แว่นกันแดดทรงวินเทจ", img: "https://images.unsplash.com/photo-1511499767390-90342f56771f?w=300" },
+            { id: 20, name: "Essential Oil Diffuser", price: 1450, detail: "เครื่องพ่นไอน้ำ เพิ่มความชื้น", img: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=300" }
+        ];
+
+        // --- STATE MANAGEMENT ---
+        let cart = [];
+        
+        // บัญชี Admin พื้นฐาน
+        if(!localStorage.getItem('user_admin')) {
             localStorage.setItem('user_admin', JSON.stringify({
-                firstname: 'ระบบ', lastname: 'ผู้ดูแล', gender: 'อื่นๆ',
-                username: 'admin', password: '1234', phone: '000', email: 'admin@uniqxe.com'
+                firstname: "ผู้ดูแล", lastname: "ระบบ", username: "admin", password: "1234", gender: "อื่นๆ", phone: "000", email: "admin@uniqxe.com"
             }));
         }
 
+        // --- FUNCTIONS ---
         function register() {
             const fname = document.getElementById('reg-firstname').value;
             const lname = document.getElementById('reg-lastname').value;
@@ -145,25 +167,16 @@
             const cp = document.getElementById('reg-confirm-password').value;
             const ph = document.getElementById('reg-phone').value;
             const em = document.getElementById('reg-email').value;
-            const err = document.getElementById('reg-error');
-            
-            // ดึงค่า Radio Button ที่ถูกเช็กอยู่
             const gender = document.querySelector('input[name="gender"]:checked').value;
+            const err = document.getElementById('reg-error');
 
-            if (!fname || !lname || !u || !p || !cp || !ph || !em) { err.innerText = "กรุณากรอกข้อมูลให้ครบทุกช่อง"; return; }
-            if (p !== cp) { err.innerText = "รหัสผ่านและยืนยันรหัสผ่านไม่ตรงกัน"; return; }
-            
-            // 🛑 เช็กความซ้ำซ้อนของ Username ตามที่ต้องการ
-            if (localStorage.getItem('user_' + u)) { 
-                err.innerText = "ขออภัย: ชื่อผู้ใช้ (Username) นี้มีผู้ใช้งานในระบบแล้ว"; 
-                return; 
-            }
+            if(!fname || !lname || !u || !p || !cp || !ph || !em) { err.innerText = "กรุณากรอกข้อมูลให้ครบทุกช่อง"; return; }
+            if(p !== cp) { err.innerText = "รหัสผ่านไม่ตรงกัน"; return; }
+            if(localStorage.getItem('user_'+u)) { err.innerText = "Username นี้มีผู้ใช้งานแล้ว"; return; }
 
-            const userData = { firstname: fname, lastname: lname, gender: gender, username: u, password: p, phone: ph, email: em };
-            localStorage.setItem('user_' + u, JSON.stringify(userData));
-            
-            alert("สมัครสมาชิกสำเร็จเรียบร้อย!");
-            err.innerText = "";
+            const userData = { firstname: fname, lastname: lname, username: u, password: p, gender: gender, phone: ph, email: em };
+            localStorage.setItem('user_'+u, JSON.stringify(userData));
+            alert("สมัครสมาชิกสำเร็จ!");
             showView('login');
         }
 
@@ -172,11 +185,11 @@
             const p = document.getElementById('login-password').value;
             const err = document.getElementById('login-error');
 
-            const storedData = localStorage.getItem('user_' + u);
-            if (storedData) {
-                const user = JSON.parse(storedData);
-                if (user.password === p) {
-                    localStorage.setItem('session_user', u);
+            const stored = localStorage.getItem('user_'+u);
+            if(stored) {
+                const user = JSON.parse(stored);
+                if(user.password === p) {
+                    localStorage.setItem('session', u);
                     initSession(u);
                     return;
                 }
@@ -184,93 +197,117 @@
             err.innerText = "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
         }
 
-        function logout() {
-            localStorage.removeItem('session_user');
-            location.reload();
-        }
-
         function initSession(username) {
-            const storedData = localStorage.getItem('user_' + username);
-            const user = JSON.parse(storedData);
-
-            // ตั้งค่าชื่อบน Navbar ให้กดลิงก์ดูโปรไฟล์ได้
-            const profileBtn = document.getElementById('btn-view-profile');
-            profileBtn.innerText = user.username;
+            const user = JSON.parse(localStorage.getItem('user_'+username));
             document.getElementById('user-navbar').classList.remove('hidden');
-
-            // บรรจุข้อมูลใส่หน้า Profile รอไว้เลย
+            document.getElementById('btn-view-profile').innerText = user.username;
+            
+            // ใส่ข้อมูลโปรไฟล์
             document.getElementById('prof-fullname').innerText = user.firstname + " " + user.lastname;
             document.getElementById('prof-gender').innerText = user.gender;
             document.getElementById('prof-username').innerText = user.username;
             document.getElementById('prof-phone').innerText = user.phone;
             document.getElementById('prof-email').innerText = user.email;
 
-            if (username === 'admin') {
-                showView('admin');
-                renderAdminTable();
-            } else {
-                showView('shop');
+            if(username === 'admin') { showView('admin'); renderAdminTable(); }
+            else { showView('shop'); }
+            
+            renderProducts();
+            updateCartUI();
+        }
+
+        function renderProducts() {
+            const container = document.getElementById('product-list');
+            container.innerHTML = PRODUCTS.map(p => `
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex flex-col" id="product-${p.id}">
+                    <img src="${p.img}" class="w-full h-40 object-cover rounded-xl mb-3">
+                    <h3 class="font-bold text-lg">${p.name}</h3>
+                    <p class="text-xs text-gray-500 flex-grow">${p.detail}</p>
+                    <div class="flex justify-between items-center mt-4">
+                        <span class="font-bold text-green-700">฿${p.price.toLocaleString()}</span>
+                        <button id="btn-add-${p.id}" onclick="addToCart(${p.id})" class="bg-black text-white text-xs px-3 py-2 rounded-lg font-bold hover:opacity-80">เพิ่มลงตะกร้า</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addToCart(id) {
+            const product = PRODUCTS.find(p => p.id === id);
+            cart.push(product);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            document.getElementById('cart-badge-count').innerText = cart.length;
+            const container = document.getElementById('cart-items-container');
+            const totalEl = document.getElementById('cart-total-price');
+            
+            if(cart.length === 0) {
+                container.innerHTML = `<p class="text-center text-gray-400 py-10">ไม่มีสินค้าในตะกร้า</p>`;
+                totalEl.innerText = "฿0";
+                return;
             }
+
+            container.innerHTML = cart.map((p, idx) => `
+                <div class="flex justify-between items-center bg-gray-50 p-3 rounded-xl border border-gray-100">
+                    <div class="flex items-center gap-3">
+                        <img src="${p.img}" class="w-12 h-12 rounded-lg object-cover">
+                        <div>
+                            <p class="font-bold text-sm">${p.name}</p>
+                            <p class="text-xs text-gray-500">฿${p.price.toLocaleString()}</p>
+                        </div>
+                    </div>
+                    <button onclick="removeFromCart(${idx})" class="text-red-500 hover:text-red-700"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            `).join('');
+
+            const total = cart.reduce((sum, p) => sum + p.price, 0);
+            totalEl.innerText = "฿" + total.toLocaleString();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
         }
 
         function renderAdminTable() {
-            const tbody = document.getElementById('admin-user-table-body');
-            tbody.innerHTML = '';
-            
-            for (let i = 0; i < localStorage.length; i++) {
+            const tbody = document.getElementById('admin-user-table');
+            tbody.innerHTML = "";
+            for(let i=0; i<localStorage.length; i++) {
                 const key = localStorage.key(i);
-                if (key.startsWith('user_')) {
+                if(key.startsWith('user_')) {
                     const user = JSON.parse(localStorage.getItem(key));
-                    if (user.username === 'admin') continue;
-
-                    const row = `
-                        <tr class="text-sm border-b hover:bg-gray-50" id="row-${user.username}">
-                            <td class="p-3 border">${user.firstname} ${user.lastname}</td>
-                            <td class="p-3 border font-bold">${user.username}</td>
-                            <td class="p-3 border">${user.gender}</td>
-                            <td class="p-3 border">${user.phone}</td>
-                            <td class="p-3 border">${user.email}</td>
-                            <td class="p-3 border">
-                                <button id="btn-delete-${user.username}" onclick="deleteUser('${user.username}')" class="text-red-600 font-bold hover:underline">ลบออก</button>
-                            </td>
+                    if(user.username === 'admin') continue;
+                    tbody.innerHTML += `
+                        <tr class="border-b text-sm">
+                            <td class="p-3">${user.firstname} ${user.lastname}</td>
+                            <td class="p-3 font-bold">${user.username}</td>
+                            <td class="p-3"><button id="btn-del-${user.username}" onclick="deleteUser('${user.username}')" class="text-red-500 font-bold underline">ลบออก</button></td>
                         </tr>
                     `;
-                    tbody.innerHTML += row;
                 }
             }
         }
 
-        function deleteUser(username) {
-            if (confirm('ต้องการลบผู้ใช้ ' + username + ' ออกจากระบบจริงไหม?')) {
-                localStorage.removeItem('user_' + username);
-                renderAdminTable();
-            }
+        function deleteUser(u) {
+            if(confirm('ลบผู้ใช้ '+u+'?')) { localStorage.removeItem('user_'+u); renderAdminTable(); }
         }
 
-        function goToHome() {
-            const session = localStorage.getItem('session_user');
-            if(session === 'admin') showView('admin');
-            else if(session) showView('shop');
+        function logout() {
+            localStorage.removeItem('session');
+            location.reload();
         }
 
-        function showView(view) {
-            document.getElementById('view-login').classList.add('hidden');
-            document.getElementById('view-register').classList.add('hidden');
-            document.getElementById('view-user-shop').classList.add('hidden');
-            document.getElementById('view-profile').classList.add('hidden');
-            document.getElementById('view-admin-dashboard').classList.add('hidden');
-
-            if (view === 'login') document.getElementById('view-login').classList.remove('hidden');
-            if (view === 'register') document.getElementById('view-register').classList.remove('hidden');
-            if (view === 'shop') document.getElementById('view-user-shop').classList.remove('hidden');
-            if (view === 'profile') document.getElementById('view-profile').classList.remove('hidden');
-            if (view === 'admin') document.getElementById('view-admin-dashboard').classList.remove('hidden');
+        function showView(viewId) {
+            const views = ['view-login', 'view-register', 'view-shop', 'view-cart', 'view-profile', 'view-admin'];
+            views.forEach(v => document.getElementById(v).classList.add('hidden'));
+            document.getElementById('view-' + viewId).classList.remove('hidden');
         }
 
         window.onload = function() {
-            const session = localStorage.getItem('session_user');
-            if (session) initSession(session);
-        };
+            const session = localStorage.getItem('session');
+            if(session) initSession(session);
+        }
     </script>
 </body>
 </html>
