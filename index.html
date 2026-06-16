@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Uniqxe Shop - High Performance Automation Practice</title>
+    <title>Uniqxe Shop - Fixed Performance Practice</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script>
@@ -56,7 +56,7 @@
             <div id="login-error" class="text-red-500 text-sm mb-4 text-center font-bold"></div>
             <div class="space-y-4">
                 <input id="login-username" type="text" placeholder="Username" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-green-400 outline-none text-sm">
-                <input id="login-password" type="password" placeholder="Password" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-green-400 outline-none text-sm">
+                <input id="login-password" type="password" placeholder="Password" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-green-400 outline-none text-sm" onkeypress="handleLoginEnter(event)">
                 <button id="btn-login" onclick="login()" class="w-full bg-black text-white font-bold py-3 rounded-lg hover:bg-gray-800 transition dark:bg-emerald-600 text-sm">เข้าสู่ระบบ</button>
             </div>
             <p class="mt-6 text-center text-sm">ยังไม่มีบัญชี? <button id="btn-go-register" onclick="showView('register')" class="text-green-700 dark:text-green-400 font-bold underline">สมัครสมาชิก</button></p>
@@ -175,28 +175,28 @@
     </div>
 
     <script>
-        // --- DATA: 20 PRODUCTS WITH REAL PICTURES (FIXED BUG 'โcmd') ---
+        // --- DATA: 20 PRODUCTS WITH RELIABLE SECURE IMAGE LINKS ---
         const PRODUCTS = [
-            { id: 1, name: "Vespa Sprint 150", price: 1500, detail: "โมเดลรถจิ๋วสีมิ้นต์สุดคลาสสิก", img: "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=400&q=80" },
-            { id: 2, name: "Mechanical Keyboard", price: 2900, detail: "คีย์บอร์ดเสียงเพราะ พิมพ์สนุก ไฟ RGB", img: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400&q=80" },
-            { id: 3, name: "Matcha Whisk Set", price: 850, detail: "ชุดแปรงชงมัทฉะไม้ไผ่ครบเซ็ตสไตล์ญี่ปุ่น", img: "https://images.unsplash.com/photo-1536256263959-770b48d82b0a?w=400&q=80" },
-            { id: 4, name: "Minimalist Table Lamp", price: 1200, detail: "โคมไฟตั้งโต๊ะมินิมอล แสงนวลวอร์มไวท์", img: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=400&q=80" },
-            { id: 5, name: "Ceramic Coffee Cup", price: 350, detail: "แก้วเซรามิกแฮนด์เมด ทนความร้อนสูง", img: "https://images.unsplash.com/photo-1514218953589-2d7d37efd2ec?w=400&q=80" },
-            { id: 6, name: "Analog Wristwatch", price: 4500, detail: "นาฬิกาข้อมือสายหนังแท้สไตล์วินเทจ", img: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=400&q=80" },
-            { id: 7, name: "Cotton Tote Bag", price: 250, detail: "กระเป๋าผ้าแคนวาสรักษ์โลก แข็งแรงทนทาน", img: "https://images.unsplash.com/photo-1544816155-12df9643f363?w=400&q=80" },
-            { id: 8, name: "Wireless Earbuds", price: 1900, detail: "หูฟังบลูทูธไร้สาย เบสแน่น ตัดเสียงรบกวน", img: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400&q=80" },
-            { id: 9, name: "Planner Notebook", price: 490, detail: "สมุดบันทึกแพลนเนอร์ ปกหนังสุดพรีเมียม", img: "https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=400&q=80" },
-            { id: 10, name: "Green Tea Candle", price: 390, detail: "เทียนหอมกลิ่นชาเขียว ช่วยผ่อนคลาย", img: "https://images.unsplash.com/photo-1603006905003-be475563bc59?w=400&q=80" },
-            { id: 11, name: "Succulent Pot", price: 120, detail: "กระถางต้นไม้จิ๋ว ตั้งโต๊ะเพิ่มความสดชื่น", img: "https://images.unsplash.com/photo-1509423350716-97f9360b4e09?w=400&q=80" },
-            { id: 12, name: "Leather Wallet", price: 890, detail: "กระเป๋าสตางค์ใบสั้น ช่องใส่บัตรเยอะ", img: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=400&q=80" },
-            { id: 13, name: "Glass Water Bottle", price: 450, detail: "ขวดน้ำแก้วสไตล์สปอร์ต มีปลอกกันร้อน", img: "https://images.unsplash.com/photo-1602143303707-e41713f3e797?w=400&q=80" },
-            { id: 14, name: "Eco-friendly Pen", price: 50, detail: "ปากกาลูกลื่น ทำจากกระดาษรีไซเคิล", img: "https://images.unsplash.com/photo-1585336139118-132f507ad742?w=400&q=80" },
-            { id: 15, name: "Desk Mat (Mint)", price: 650, detail: "แผ่นรองโต๊ะทำงานขนาดใหญ่ หนัง PU กันน้ำ", img: "https://images.unsplash.com/photo-1616627547584-bf28cee262db?w=400&q=80" },
-            { id: 16, name: "Canvas Sneakers", price: 1250, detail: "รองเท้าผ้าใบสไตล์ลำลอง แมทช์ได้ทุกชุด", img: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=400&q=80" },
-            { id: 17, name: "Table Fan (Portable)", price: 790, detail: "พัดลมตั้งโต๊ะพกพา ปรับความแรงได้ 3 ระดับ", img: "https://images.unsplash.com/photo-1618944847023-38aa001235f0?w=400&q=80" },
-            { id: 18, name: "Coffee Dripper", price: 550, detail: "ถ้วยดริปกาแฟเซรามิกสไตล์คราฟท์", img: "https://images.unsplash.com/photo-1544787210-2213d84ad96b?w=400&q=80" },
-            { id: 19, name: "Sunglasses", price: 1100, detail: "แว่นตากันแดดทรงเหลี่ยม ป้องกัน UV400", img: "https://images.unsplash.com/photo-1511499767390-90342f56771f?w=400&q=80" },
-            { id: 20, name: "Oil Diffuser", price: 1450, detail: "เครื่องพ่นไอน้ำอโรมาระบบอัลตราโซนิก", img: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=400&q=80" }
+            { id: 1, name: "Vespa Sprint 150", price: 1500, detail: "โมเดลรถจิ๋วสีมิ้นต์สุดคลาสสิก", img: "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=400&auto=format&fit=crop&q=60" },
+            { id: 2, name: "Mechanical Keyboard", price: 2900, detail: "คีย์บอร์ดเสียงเพราะ พิมพ์สนุก ไฟ RGB", img: "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=400&auto=format&fit=crop&q=60" },
+            { id: 3, name: "Matcha Whisk Set", price: 850, detail: "ชุดแปรงชงมัทฉะไม้ไผ่ครบเซ็ตสไตล์ญี่ปุ่น", img: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=400&auto=format&fit=crop&q=60" },
+            { id: 4, name: "Minimalist Table Lamp", price: 1200, detail: "โคมไฟตั้งโต๊ะมินิมอล แสงนวลวอร์มไวท์", img: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=400&auto=format&fit=crop&q=60" },
+            { id: 5, name: "Ceramic Coffee Cup", price: 350, detail: "แก้วเซรามิกแฮนด์เมด ทนความร้อนสูง", img: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400&auto=format&fit=crop&q=60" },
+            { id: 6, name: "Analog Wristwatch", price: 4500, detail: "นาฬิกาข้อมือสายหนังแท้สไตล์วินเทจ", img: "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=400&auto=format&fit=crop&q=60" },
+            { id: 7, name: "Cotton Tote Bag", price: 250, detail: "กระเป๋าผ้าแคนวาสรักษ์โลก แข็งแรงทนทาน", img: "https://images.unsplash.com/photo-1544816155-12df9643f363?w=400&auto=format&fit=crop&q=60" },
+            { id: 8, name: "Wireless Earbuds", price: 1900, detail: "หหูฟังบลูทูธไร้สาย เบสแน่น ตัดเสียงรบกวน", img: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400&auto=format&fit=crop&q=60" },
+            { id: 9, name: "Planner Notebook", price: 490, detail: "สมุดบันทึกแพลนเนอร์ ปกหนังสุดพรีเมียม", img: "https://images.unsplash.com/photo-1517842645767-c639042777db?w=400&auto=format&fit=crop&q=60" },
+            { id: 10, name: "Green Tea Candle", price: 390, detail: "เทียนหอมกลิ่นชาเขียว ช่วยผ่อนคลาย", img: "https://images.unsplash.com/photo-1603006905003-be475563bc59?w=400&auto=format&fit=crop&q=60" },
+            { id: 11, name: "Succulent Pot", price: 120, detail: "กระถางต้นไม้จิ๋ว ตั้งโต๊ะเพิ่มความสดชื่น", img: "https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=400&auto=format&fit=crop&q=60" },
+            { id: 12, name: "Leather Wallet", price: 890, detail: "กระเป๋าสตางค์ใบสั้น ช่องใส่บัตรเยอะ", img: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=400&auto=format&fit=crop&q=60" },
+            { id: 13, name: "Glass Water Bottle", price: 450, detail: "ขวดน้ำแก้วสไตล์สปอร์ต มีปลอกกันร้อน", img: "https://images.unsplash.com/photo-1523362628745-0c100150b504?w=400&auto=format&fit=crop&q=60" },
+            { id: 14, name: "Eco-friendly Pen", price: 50, detail: "ปากกาลูกลื่น ทำจากกระดาษรีไซเคิล", img: "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?w=400&auto=format&fit=crop&q=60" },
+            { id: 15, name: "Desk Mat (Mint)", price: 650, detail: "แผ่นรองโต๊ะทำงานขนาดใหญ่ หนัง PU กันน้ำ", img: "https://images.unsplash.com/photo-1585776245991-cf89dd7fc73a?w=400&auto=format&fit=crop&q=60" },
+            { id: 16, name: "Canvas Sneakers", price: 1250, detail: "รองเท้าผ้าใบสไตล์ลำลอง แมทช์ได้ทุกชุด", img: "https://images.unsplash.com/photo-1463100099907-44d12ba71104?w=400&auto=format&fit=crop&q=60" },
+            { id: 17, name: "Table Fan (Portable)", price: 790, detail: "พัดลมตั้งโต๊ะพกพา ปรับความแรงได้ 3 ระดับ", img: "https://images.unsplash.com/photo-1527685216219-cbb6363f4535?w=400&auto=format&fit=crop&q=60" },
+            { id: 18, name: "Coffee Dripper", price: 550, detail: "ถ้วยดริปกาแฟเซรามิกสไตล์คราฟท์", img: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400&auto=format&fit=crop&q=60" },
+            { id: 19, name: "Sunglasses", price: 1100, detail: "แว่นตากันแดดทรงเหลี่ยม ป้องกัน UV400", img: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&auto=format&fit=crop&q=60" },
+            { id: 20, name: "Oil Diffuser", price: 1450, detail: "เครื่องพ่นไอน้ำอโรมาระบบอัลตราโซนิก", img: "https://images.unsplash.com/photo-1519183071298-a2962feb14f4?w=400&auto=format&fit=crop&q=60" }
         ];
 
         // --- STATE MANAGEMENT ---
@@ -208,6 +208,35 @@
             localStorage.setItem('user_admin', JSON.stringify({
                 firstname: "ผู้ดูแล", lastname: "ระบบ", username: "admin", password: "1234", gender: "อื่นๆ", phone: "000", email: "admin@uniqxe.com", history: []
             }));
+        }
+
+        // ─── NEW: ฟังก์ชันรองรับการกด ENTER ในหน้า LOGIN ───
+        function handleLoginEnter(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                login();
+            }
+        }
+
+        // ─── NEW: เติมฟังก์ชัน ADD TO CART ที่หายไปกลับมา ───
+        function addToCart(productId) {
+            const product = PRODUCTS.find(p => p.id === productId);
+            if (product) {
+                cart.push(product);
+                updateCartUI();
+                
+                // เอฟเฟกต์กิมมิคเล็กๆ เปลี่ยนข้อความปุ่มชั่วคราวเพื่อให้รู้ว่ากดติดแล้ว
+                const btn = document.getElementById(`btn-add-${productId}`);
+                if(btn) {
+                    const originalText = btn.innerText;
+                    btn.innerText = "✓ เพิ่มแล้ว";
+                    btn.classList.replace('bg-black', 'bg-green-600');
+                    setTimeout(() => {
+                        btn.innerText = originalText;
+                        btn.classList.replace('bg-green-600', 'bg-black');
+                    }, 800);
+                }
+            }
         }
 
         function toggleDarkMode() {
@@ -289,7 +318,7 @@
                     <p class="text-[11px] sm:text-xs text-gray-500 flex-grow line-clamp-2 mt-0.5">${p.detail}</p>
                     <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 mt-3 sm:mt-4">
                         <span class="font-bold text-sm sm:text-base text-green-700 dark:text-green-400">฿${p.price.toLocaleString()}</span>
-                        <button id="btn-add-${p.id}" onclick="addToCart(${p.id})" class="bg-black text-white dark:bg-neutral-700 dark:hover:bg-neutral-600 text-[10px] sm:text-xs px-2.5 py-2 rounded-lg font-bold hover:opacity-80 w-full sm:w-auto text-center">เพิ่มลงตะกร้า</button>
+                        <button id="btn-add-${p.id}" onclick="addToCart(${p.id})" class="bg-black text-white dark:bg-neutral-700 dark:hover:bg-neutral-600 text-[10px] sm:text-xs px-2.5 py-2 rounded-lg font-bold hover:opacity-80 w-full sm:w-auto text-center transition-colors">เพิ่มลงตะกร้า</button>
                     </div>
                 </div>
             `).join('');
