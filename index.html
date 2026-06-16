@@ -2,48 +2,117 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <title>YoungTrips Mock Shop</title>
+    <title>YoungTrips Mock Shopee</title>
     <style>
         body { font-family: sans-serif; background: #f4f4f4; padding: 20px; }
         .card { background: white; padding: 20px; border-radius: 8px; max-width: 400px; margin: auto; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        input { wIdth: 90%; padding: 8px; margin: 8px 0; }
-        button { background: #ff5500; color: white; border: none; padding: 10px; wIdth: 100%; cursor: pointer; border-radius: 4px; }
+        input { width: 90%; padding: 8px; margin: 8px 0; border: 1px solid #ccc; border-radius: 4px; }
+        button { background: #ff5500; color: white; border: none; padding: 10px; width: 100%; cursor: pointer; border-radius: 4px; margin-top: 10px; }
+        .link-btn { background: none; color: #0066cc; text-decoration: underline; width: auto; padding: 0; margin-top: 15px; font-size: 14px; }
         .hidden { display: none; }
+        .message { color: #ff5500; font-weight: bold; margin: 10px 0; font-size: 14px; }
+        .success { color: green; }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <h2 id="page-title">เข้าสู่ระบบ (Mockup)</h2>
+        <h2 id="page-title">เข้าสู่ระบบ</h2>
+        <div id="msg-alert" class="message"></div>
         
         <div id="login-section">
             <input id="input-username" type="text" placeholder="ใส่ชื่อผู้ใช้">
             <input id="input-password" type="password" placeholder="ใส่รหัสผ่าน">
             <button id="btn-login" onclick="login()">ล็อกอิน</button>
+            <center><button id="btn-go-register" class="link-btn" onclick="toggleView('register')">ยังไม่มีบัญชี? สมัครสมาชิกที่นี่</button></center>
+        </div>
+
+        <div id="register-section" class="hidden">
+            <input id="reg-username" type="text" placeholder="ตั้งชื่อผู้ใช้ใหม่">
+            <input id="reg-password" type="password" placeholder="ตั้งรหัสผ่าน">
+            <button id="btn-register" onclick="register()">ยืนยันการสมัครสมาชิก</button>
+            <center><button id="btn-go-login" class="link-btn" onclick="toggleView('login')">มีบัญชีอยู่แล้ว? กลับไปหน้าล็อกอิน</button></center>
         </div>
 
         <div id="welcome-section" class="hidden">
-            <p>ยินดีต้อนรับคุณ <b id="user-display"></b></p>
+            <p>สวัสดีคุณ <b id="user-display"></b> !</p>
             <hr>
             <p>สินค้า: โมเดลรถ Vespa Sprint (฿1,500)</p>
             <button id="btn-add-cart" onclick="addCart()">🛒 หยิบใส่ตะกร้า</button>
             <p>จำนวนในตะกร้า: <b id="cart-count">0</b> ชิ้น</p>
+            <button id="btn-logout" style="background: #666;" onclick="logout()">ออกจากระบบ</button>
         </div>
     </div>
 
     <script>
+        // ใช้ sessionStorage จำลองฐานข้อมูลชั่วคราว (ปิดบราวเซอร์ข้อมูลจะรีเซ็ตใหม่ เพื่อให้เหมาะกับการรันเทสซ้ำๆ)
+        function register() {
+            var user = document.getElementById('reg-username').value;
+            var pass = document.getElementById('reg-password').value;
+            var alertBox = document.getElementById('msg-alert');
+
+            if(user === "" || pass === "") {
+                alertBox.innerText = "กรุณากรอกข้อมูลให้ครบถ้วน";
+                alertBox.className = "message";
+                return;
+            }
+
+            sessionStorage.setItem('mock_user_' + user, pass);
+            alertBox.innerText = "สมัครสมาชิกสำเร็จ! กรุณาล็อกอิน";
+            alertBox.className = "message success";
+            toggleView('login');
+        }
+
         function login() {
             var user = document.getElementById('input-username').value;
-            if(user !== "") {
+            var pass = document.getElementById('input-password').value;
+            var alertBox = document.getElementById('msg-alert');
+            
+            var savedPassword = sessionStorage.getItem('mock_user_' + user);
+
+            if(savedPassword && savedPassword === pass) {
+                alertBox.innerText = "";
                 document.getElementById('user-display').innerText = user;
-                document.getElementById('login-section').classList.add('hidden');
-                document.getElementById('welcome-section').classList.remove('hidden');
-                document.getElementById('page-title').innerText = "หน้าซื้อของ";
+                toggleView('welcome');
+            } else {
+                alertBox.innerText = "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
+                alertBox.className = "message";
             }
         }
+
+        function logout() {
+            document.getElementById('input-username').value = "";
+            document.getElementById('input-password').value = "";
+            document.getElementById('msg-alert').innerText = "ออกจากระบบเรียบร้อย";
+            document.getElementById('msg-alert').className = "message success";
+            toggleView('login');
+        }
+
         function addCart() {
             var count = document.getElementById('cart-count').innerText;
             document.getElementById('cart-count').innerText = parseInt(count) + 1;
+        }
+
+        function toggleView(view) {
+            var loginSec = document.getElementById('login-section');
+            var regSec = document.getElementById('register-section');
+            var welcomeSec = document.getElementById('welcome-section');
+            var title = document.getElementById('page-title');
+
+            loginSec.classList.add('hidden');
+            regSec.classList.add('hidden');
+            welcomeSec.classList.add('hidden');
+
+            if(view === 'login') {
+                loginSec.classList.remove('hidden');
+                title.innerText = "เข้าสู่ระบบ";
+            } else if(view === 'register') {
+                regSec.classList.remove('hidden');
+                title.innerText = "สมัครสมาชิก";
+            } else if(view === 'welcome') {
+                welcomeSec.classList.remove('hidden');
+                title.innerText = "หน้าซื้อของ";
+            }
         }
     </script>
 </body>
