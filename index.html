@@ -3,21 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Uniqxe Shop - High Performance Automation Practice</title>
+    <title>UNIQXE SHOP - ช้อปสนุก SHOP</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script>
         tailwind.config = {
             darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        uniqxeMint: '#C8E6C9',
+                        uniqxeGreen: '#4CAF50',
+                        uniqxeOrange: '#FF5722',
+                    }
+                }
+            }
         }
     </script>
     <style>
-        .mint-bg { background-color: #f1f8e9; }
-        .mint-accent { background-color: #a5d6a7; }
+        .theme-bg { background-color: #E8F5E9; }
+        .theme-accent { background-color: #A5D6A7; }
         .hidden { display: none !important; }
-        .cart-badge { position: absolute; top: -5px; right: -8px; background: #ff5252; color: white; border-radius: 50%; padding: 1px 5px; font-size: 10px; font-weight: bold; }
+        .cart-badge { position: absolute; top: -5px; right: -8px; background: #FF5722; color: white; border-radius: 50%; padding: 1px 5px; font-size: 10px; font-weight: bold; }
         
-        .dark .mint-bg { background-color: #121212; color: #ffffff; }
+        .dark .theme-bg { background-color: #121212; color: #ffffff; }
         .dark .bg-white { background-color: #1e1e1e; color: #ffffff; border-color: #333; }
         .dark .text-gray-700 { color: #e0e0e0; }
         .dark .text-gray-500 { color: #aaa; }
@@ -25,11 +34,13 @@
         .dark input { background-color: #2d2d2d; color: white; border-color: #444; }
     </style>
 </head>
-<body class="mint-bg min-h-screen font-sans text-black dark:text-white transition-colors duration-200">
+<body class="theme-bg min-h-screen font-sans text-black dark:text-white transition-colors duration-200">
 
-    <nav id="user-navbar" class="mint-accent text-black p-3 sm:p-4 shadow-sm sticky top-0 z-50 hidden dark:bg-emerald-800 dark:text-white">
+    <nav id="user-navbar" class="theme-accent text-black p-3 sm:p-4 shadow-sm sticky top-0 z-50 hidden dark:bg-emerald-800 dark:text-white">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <div id="web-logo" class="font-bold text-xl sm:text-2xl tracking-tighter cursor-pointer" onclick="showView('shop')">Uniqxe Shop</div>
+            <div id="web-logo" class="font-black text-xl sm:text-2xl tracking-tight cursor-pointer flex items-center gap-2" onclick="showView('shop')">
+                <i class="fa-solid fa-cart-shopping text-black dark:text-white"></i> UNIQXE SHOP
+            </div>
             
             <div class="flex items-center gap-4 sm:gap-6">
                 <button id="btn-toggle-dark" onclick="toggleDarkMode()" class="text-lg sm:text-xl p-1 hover:opacity-70">
@@ -41,7 +52,7 @@
                     <span id="cart-badge-count" class="cart-badge">0</span>
                 </div>
                 
-                <div class="flex items-center gap-3 sm:gap-4 border-l border-green-400 pl-3 sm:pl-6 dark:border-emerald-600">
+                <div class="flex items-center gap-3 sm:gap-4 border-l border-green-600 pl-3 sm:pl-6 dark:border-emerald-600">
                     <span class="text-xs sm:text-sm truncate max-w-[80px] sm:max-w-none">คุณ: <button id="btn-view-profile" onclick="showView('profile')" class="font-bold underline hover:text-gray-700 dark:hover:text-gray-300"></button></span>
                     <button id="btn-logout" onclick="logout()" class="bg-black text-white px-2.5 py-1.5 rounded-md text-[10px] sm:text-xs font-bold hover:bg-gray-800 dark:bg-white dark:text-black transition">ออกจากระบบ</button>
                 </div>
@@ -49,21 +60,41 @@
         </div>
     </nav>
 
+    <div id="hero-banner" class="max-w-6xl mx-auto mt-4 px-3 sm:px-4 hidden">
+        <div class="relative rounded-2xl overflow-hidden bg-gradient-to-r from-uniqxeMint to-uniqxeGreen p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between shadow-sm border border-green-300">
+            <div class="text-center md:text-left space-y-2 z-10">
+                <span class="bg-black text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest">Welcome To Automation Practice</span>
+                <h1 class="text-3xl sm:text-4xl font-black text-black tracking-tight mt-1">UNIQXE SHOP ช้อปสนุก SHOP</h1>
+                <p class="text-sm sm:text-base font-bold text-gray-800">ช้อปสนุก สั่งง่าย! มั่นใจระบบเสถียร 100%</p>
+            </div>
+            <div class="w-28 h-28 md:w-36 md:h-36 rounded-full bg-white p-2 shadow-sm mt-4 md:mt-0 flex items-center justify-center overflow-hidden border-2 border-white">
+                <div class="text-center">
+                    <i class="fa-solid fa-store text-4xl text-emerald-700 animate-pulse"></i>
+                    <p class="text-[10px] font-black mt-1 text-gray-700">UNIQXE SHOP</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="max-w-6xl mx-auto p-3 sm:p-4">
         
-        <div id="view-login" class="max-w-md mx-auto mt-10 sm:mt-20 bg-white p-5 sm:p-8 rounded-2xl shadow-xl border border-gray-100">
-            <h2 class="text-2xl sm:text-3xl font-bold mb-6 text-center">Login</h2>
+        <div id="view-login" class="max-w-md mx-auto mt-6 sm:mt-12 bg-white p-5 sm:p-8 rounded-2xl shadow-md border border-gray-100">
+            <div class="text-center mb-6">
+                <div class="inline-flex p-4 bg-uniqxeMint rounded-full mb-3 text-black text-3xl shadow-sm"><i class="fa-solid fa-lock"></i></div>
+                <h2 class="text-2xl sm:text-3xl font-black tracking-tight">UNIQXE SHOP LOGIN</h2>
+                <p class="text-xs text-gray-500 mt-1">กรุณาเข้าสู่ระบบเพื่อทดสอบระบบตะกร้าสินค้า</p>
+            </div>
             <div id="login-error" class="text-red-500 text-sm mb-4 text-center font-bold"></div>
             <div class="space-y-4">
-                <input id="login-username" type="text" placeholder="Username" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-green-400 outline-none text-sm">
-                <input id="login-password" type="password" placeholder="Password" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-green-400 outline-none text-sm" onkeypress="handleLoginEnter(event)">
-                <button id="btn-login" onclick="login()" class="w-full bg-black text-white font-bold py-3 rounded-lg hover:bg-gray-800 transition dark:bg-emerald-600 text-sm">เข้าสู่ระบบ</button>
+                <input id="login-username" type="text" placeholder="Username" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-uniqxeGreen outline-none text-sm">
+                <input id="login-password" type="password" placeholder="Password" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-uniqxeGreen outline-none text-sm" onkeypress="handleLoginEnter(event)">
+                <button id="btn-login" onclick="login()" class="w-full bg-black text-white font-bold py-3 rounded-lg hover:bg-gray-800 transition dark:bg-emerald-600 text-sm shadow-sm">เข้าสู่ระบบ</button>
             </div>
-            <p class="mt-6 text-center text-sm">ยังไม่มีบัญชี? <button id="btn-go-register" onclick="showView('register')" class="text-green-700 dark:text-green-400 font-bold underline">สมัครสมาชิก</button></p>
+            <p class="mt-6 text-center text-sm">ยังไม่มีบัญชี? <button id="btn-go-register" onclick="showView('register')" class="text-emerald-700 dark:text-emerald-400 font-bold underline">สมัครสมาชิกที่นี่</button></p>
         </div>
 
-        <div id="view-register" class="max-w-lg mx-auto mt-6 sm:mt-10 bg-white p-5 sm:p-8 rounded-2xl shadow-xl border border-gray-100 hidden">
-            <h2 class="text-xl sm:text-2xl font-bold mb-6 text-center">สมัครสมาชิกใหม่</h2>
+        <div id="view-register" class="max-w-lg mx-auto mt-6 bg-white p-5 sm:p-8 rounded-2xl shadow-md border border-gray-100 hidden">
+            <h2 class="text-xl sm:text-2xl font-black mb-6 text-center text-emerald-700">สมัครสมาชิกใหม่</h2>
             <div id="reg-error" class="text-red-500 text-sm mb-4 text-center font-bold"></div>
             <div class="grid grid-cols-2 gap-3 mb-3">
                 <input id="reg-firstname" type="text" placeholder="ชื่อจริง" class="border p-2.5 rounded-lg text-sm">
@@ -83,27 +114,29 @@
                 <input id="reg-confirm-password" type="password" placeholder="Confirm Password" class="w-full border p-2.5 rounded-lg text-sm">
                 <input id="reg-phone" type="text" placeholder="เบอร์โทรศัพท์" class="w-full border p-2.5 rounded-lg text-sm">
                 <input id="reg-email" type="email" placeholder="อีเมล" class="w-full border p-2.5 rounded-lg text-sm">
-                <button id="btn-register" onclick="register()" class="w-full mint-accent font-bold py-3 rounded-lg hover:opacity-80 text-black transition text-sm">ยืนยันสมัครสมาชิก</button>
+                <button id="btn-register" onclick="register()" class="w-full theme-accent font-black py-3 rounded-lg hover:opacity-80 text-black transition text-sm shadow-sm">ยืนยันสมัครสมาชิก</button>
                 <button onclick="showView('login')" class="w-full text-xs text-gray-500 underline mt-2">กลับไปหน้าล็อกอิน</button>
             </div>
         </div>
 
         <div id="view-shop" class="mt-2 sm:mt-4 hidden">
-            <h2 class="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">รายการสินค้าทั้งหมด</h2>
+            <h2 class="text-xl sm:text-2xl font-black mb-4 sm:mb-6 flex items-center gap-2 text-gray-800 dark:text-white">
+                 รายการสินค้าทั้งหมด
+            </h2>
             <div id="product-list" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-6">
                 </div>
         </div>
 
-        <div id="view-cart" class="max-w-2xl mx-auto mt-6 sm:mt-10 bg-white p-5 sm:p-8 rounded-2xl shadow-xl border border-gray-100 hidden">
-            <h2 class="text-xl sm:text-2xl font-bold mb-6 flex items-center gap-2"><i class="fa-solid fa-cart-shopping"></i> ตะกร้าของคุณ</h2>
+        <div id="view-cart" class="max-w-2xl mx-auto mt-6 bg-white p-5 sm:p-8 rounded-2xl shadow-md border border-gray-100 hidden">
+            <h2 class="text-xl sm:text-2xl font-black mb-6 flex items-center gap-2 text-emerald-700"><i class="fa-solid fa-cart-shopping"></i> ตะกร้าสินค้าของคุณ</h2>
             <div id="cart-items-container" class="space-y-4 mb-6">
                 </div>
 
-            <div class="bg-gray-50 p-3 sm:p-4 rounded-xl mb-6 border border-gray-100">
-                <label class="block text-xs font-bold text-gray-500 mb-2">โค้ดส่วนลด (ทดสอบ: UNIQXE10)</label>
+            <div class="bg-green-50 p-3 sm:p-4 rounded-xl mb-6 border border-green-100 dark:bg-neutral-800 dark:border-neutral-700">
+                <label class="block text-xs font-bold text-gray-500 mb-2 dark:text-gray-400">โค้ดส่วนลดแนะนำ (ทดสอบ: UNIQXE10)</label>
                 <div class="flex gap-2">
-                    <input id="cart-coupon-input" type="text" placeholder="กรอกโค้ดส่วนลด" class="border p-2 rounded-lg flex-grow outline-none text-xs sm:text-sm">
-                    <button id="btn-apply-coupon" onclick="applyCoupon()" class="bg-black text-white px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-bold hover:opacity-80 whitespace-nowrap">ใช้โค้ด</button>
+                    <input id="cart-coupon-input" type="text" placeholder="กรอกโค้ดส่วนลด" class="border p-2 rounded-lg flex-grow outline-none text-xs sm:text-sm dark:bg-neutral-700">
+                    <button id="btn-apply-coupon" onclick="applyCoupon()" class="bg-black text-white px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-bold hover:opacity-80 whitespace-nowrap dark:bg-emerald-600">ใช้โค้ด</button>
                 </div>
                 <div id="coupon-message" class="text-xs mt-2 font-bold"></div>
             </div>
@@ -114,24 +147,24 @@
                     <span id="subtotal-price">฿0</span>
                 </div>
                 <div class="flex justify-between text-red-500 font-bold">
-                    <span>ส่วนลด:</span>
+                    <span>ส่วนลดระบบ:</span>
                     <span id="discount-price">-฿0</span>
                 </div>
                 <div class="flex justify-between items-center font-bold text-lg sm:text-xl text-black dark:text-white border-t pt-2">
-                    <span>ยอดชำระสุทธิ:</span>
-                    <span id="cart-total-price" class="text-green-700 dark:text-green-400">฿0</span>
+                    <span>ยอดชำระสุทธิทั้งหมด:</span>
+                    <span id="cart-total-price" class="text-emerald-700 dark:text-emerald-400">฿0</span>
                 </div>
             </div>
 
-            <button id="btn-checkout" onclick="checkoutOrder()" class="w-full bg-black text-white font-bold py-3 rounded-lg mt-6 hover:bg-gray-800 transition dark:bg-emerald-600 text-sm">เริ่มสั่งซื้อสินค้า</button>
+            <button id="btn-checkout" onclick="checkoutOrder()" class="w-full bg-black text-white font-black py-3 rounded-lg mt-6 hover:bg-gray-800 transition dark:bg-emerald-600 text-sm shadow-sm">ยืนยันสั่งซื้อสินค้า</button>
             <button onclick="showView('shop')" class="w-full text-xs sm:text-sm text-gray-500 mt-4 underline text-center block">กลับไปเลือกสินค้าเพิ่ม</button>
         </div>
 
-        <div id="view-profile" class="max-w-2xl mx-auto mt-6 sm:mt-10 bg-white p-5 sm:p-8 rounded-2xl shadow-xl border border-gray-100 hidden">
-            <h2 class="text-xl sm:text-2xl font-bold mb-6 border-b pb-2">โปรไฟล์ของฉัน</h2>
+        <div id="view-profile" class="max-w-2xl mx-auto mt-6 bg-white p-5 sm:p-8 rounded-2xl shadow-md border border-gray-100 hidden">
+            <h2 class="text-xl sm:text-2xl font-black mb-6 border-b pb-2 text-emerald-700">โปรไฟล์สมาชิก UNIQXE SHOP</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="space-y-4 text-xs sm:text-sm text-gray-700 dark:text-gray-300 md:border-r md:pr-4 border-gray-100">
-                    <h3 class="font-bold text-black dark:text-white text-sm sm:text-base"><i class="fa-solid fa-user"></i> ข้อมูลส่วนตัว</h3>
+                    <h3 class="font-bold text-black dark:text-white text-sm sm:text-base"><i class="fa-solid fa-user"></i> ข้อมูลบัญชี</h3>
                     <p><b>ชื่อ-นามสกุล:</b> <span id="prof-fullname"></span></p>
                     <p><b>เพศ:</b> <span id="prof-gender"></span></p>
                     <p><b>Username:</b> <span id="prof-username"></span></p>
@@ -139,17 +172,17 @@
                     <p><b>อีเมล:</b> <span id="prof-email"></span></p>
                 </div>
                 <div class="border-t pt-4 md:border-t-0 md:pt-0 border-gray-100">
-                    <h3 class="font-bold mb-3 text-sm sm:text-base"><i class="fa-solid fa-clock-rotate-left"></i> ประวัติการสั่งซื้อ</h3>
+                    <h3 class="font-bold mb-3 text-sm sm:text-base"><i class="fa-solid fa-clock-rotate-left"></i> ประวัติสั่งซื้อ</h3>
                     <div id="order-history-container" class="space-y-3 max-h-60 overflow-y-auto pr-1 text-xs text-gray-500">
                         </div>
                 </div>
             </div>
-            <button onclick="showView('shop')" class="w-full mt-8 bg-gray-100 dark:bg-neutral-700 py-2 rounded-lg font-bold text-sm">กลับไปหน้าหลัก</button>
+            <button onclick="showView('shop')" class="w-full mt-8 bg-gray-100 dark:bg-neutral-700 py-2 rounded-lg font-bold text-sm">กลับหน้าหลักร้านค้า</button>
         </div>
 
-        <div id="view-admin" class="mt-6 sm:mt-10 hidden">
-            <div class="bg-white p-4 sm:p-8 rounded-2xl shadow-xl overflow-x-auto border border-gray-100">
-                <h2 class="text-xl sm:text-2xl font-bold mb-6 text-red-600 font-mono">🛡️ Admin Dashboard</h2>
+        <div id="view-admin" class="mt-6 hidden">
+            <div class="bg-white p-4 sm:p-8 rounded-2xl shadow-md overflow-x-auto border border-gray-100">
+                <h2 class="text-xl sm:text-2xl font-black mb-6 text-red-600 font-mono">🛡️ Admin Dashboard</h2>
                 <table class="w-full text-left border-collapse min-w-[500px]">
                     <thead>
                         <tr class="bg-gray-100 dark:bg-neutral-800 text-xs sm:text-sm">
@@ -166,37 +199,37 @@
     </div>
 
     <div id="success-modal" class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50 hidden">
-        <div class="bg-white p-6 rounded-2xl max-w-sm w-full text-center shadow-2xl border">
+        <div class="bg-white p-6 rounded-2xl max-w-sm w-full text-center shadow-md border">
             <div class="text-green-500 text-4xl sm:text-5xl mb-3"><i class="fa-solid fa-circle-check"></i></div>
-            <h3 class="text-lg sm:text-xl font-bold mb-2">สั่งซื้อสินค้าสำเร็จ!</h3>
+            <h3 class="text-lg sm:text-xl font-black mb-2">สั่งซื้อสินค้าสำเร็จ!</h3>
             <p class="text-xs text-gray-500 mb-4">หมายเลขคำสั่งซื้อคือ <span id="modal-order-id" class="font-mono font-bold text-black"></span></p>
-            <button onclick="closeSuccessModal()" class="w-full bg-black text-white font-bold py-2 rounded-lg text-sm">ตกลง</button>
+            <button onclick="closeSuccessModal()" class="w-full bg-black text-white font-bold py-2 rounded-lg text-sm shadow-sm">ตกลง</button>
         </div>
     </div>
 
     <script>
-        // --- DATA: 20 PRODUCTS WITH ULTRA SECURE AND STABLE MOCKUP IMAGES (100% ERROR-FREE) ---
+        // --- DATA: 20 PRODUCTS WITH STABLE & BEAUTIFUL MOCKUP BOXES (100% ERROR-FREE) ---
         const PRODUCTS = [
-            { id: 1, name: "Vespa Sprint 150", price: 1500, detail: "โมเดลรถจิ๋วสีมิ้นต์สุดคลาสสิก", img: "https://placehold.co/400x300/a5d6a7/000000?text=Vespa+Sprint" },
-            { id: 2, name: "Mechanical Keyboard", price: 2900, detail: "คีย์บอร์ดเสียงเพราะ พิมพ์สนุก ไฟ RGB", img: "https://placehold.co/400x300/1e1e1e/ffffff?text=Keyboard" },
-            { id: 3, name: "Matcha Whisk Set", price: 850, detail: "ชุดแปรงชงมัทฉะไม้ไผ่ครบเซ็ตสไตล์ญี่ปุ่น", img: "https://placehold.co/400x300/e8f5e9/2e7d32?text=Matcha+Set" },
-            { id: 4, name: "Minimalist Table Lamp", price: 1200, detail: "โคมไฟตั้งโต๊ะมินิมอล แงนวลวอร์มไวท์", img: "https://placehold.co/400x300/fff8e1/ff8f00?text=Table+Lamp" },
-            { id: 5, name: "Ceramic Coffee Cup", price: 350, detail: "แก้วเซรามิกแฮนด์เมด ทนความร้อนสูง", img: "https://placehold.co/400x300/d7ccc8/4e342e?text=Coffee+Cup" },
-            { id: 6, name: "Analog Wristwatch", price: 4500, detail: "นาฬิกาข้อมือสายหนังแท้สไตล์วินเทจ", img: "https://placehold.co/400x300/cfd8dc/37474f?text=Wristwatch" },
-            { id: 7, name: "Cotton Tote Bag", price: 250, detail: "กระเป๋าผ้าแคนวาสรักษ์โลก แข็งแรงทนทาน", img: "https://placehold.co/400x300/f5f5f5/212121?text=Tote+Bag" },
-            { id: 8, name: "Wireless Earbuds", price: 1900, detail: "หูฟังบลูทูธไร้สาย เบสแน่น ตัดเสียงรบกวน", img: "https://placehold.co/400x300/e0f7fa/00838f?text=Wireless+Earbuds" },
-            { id: 9, name: "Planner Notebook", price: 490, detail: "สมุดบันทึกแพลนเนอร์ ปกหนังสุดพรีเมียม", img: "https://placehold.co/400x300/f3e5f5/6a1b9a?text=Notebook" },
-            { id: 10, name: "Green Tea Candle", price: 390, detail: "เทียนหอมกลิ่นชาเขียว ช่วยผ่อนคลาย", img: "https://placehold.co/400x300/e8f5e9/1b5e20?text=GreenTea+Candle" },
-            { id: 11, name: "Succulent Pot", price: 120, detail: "กระถางต้นไม้จิ๋ว ตั้งโต๊ะเพิ่มความสดชื่น", img: "https://placehold.co/400x300/c8e6c9/2e7d32?text=Succulent+Pot" },
-            { id: 12, name: "Leather Wallet", price: 890, detail: "กระเป๋าสตางค์ใบสั้น ช่องใส่บัตรเยอะ", img: "https://placehold.co/400x300/efebe9/4e342e?text=Leather+Wallet" },
-            { id: 13, name: "Glass Water Bottle", price: 450, detail: "ขวดน้ำแก้วสไตล์สปอร์ต มีปลอกกันร้อน", img: "https://placehold.co/400x300/e1f5fe/0277bd?text=Water+Bottle" },
-            { id: 14, name: "Eco-friendly Pen", price: 50, detail: "ปากกาลูกลื่น ทำจากกระดาษรีไซเคิล", img: "https://placehold.co/400x300/f1f8e9/558b2f?text=Eco+Pen" },
-            { id: 15, name: "Desk Mat (Mint)", price: 650, detail: "แผ่นรองโต๊ะทำงานขนาดใหญ่ หนัง PU กันน้ำ", img: "https://placehold.co/400x300/e8f8f5/117a65?text=Desk+Mat+Mint" },
-            { id: 16, name: "Canvas Sneakers", price: 1250, detail: "รองเท้าผ้าใบสไตล์ลำลอง แมทช์ได้ทุกชุด", img: "https://placehold.co/400x300/fdf2e9/e67e22?text=Canvas+Sneakers" },
-            { id: 17, name: "Table Fan (Portable)", price: 790, detail: "พัดลมตั้งโต๊ะพกพา ปรับความแรงได้ 3 ระดับ", img: "https://placehold.co/400x300/eaf2f8/2471a3?text=Portable+Fan" },
-            { id: 18, name: "Coffee Dripper", price: 550, detail: "ถ้วยดริปกาแฟเซรามิกสไตล์คราฟท์", img: "https://placehold.co/400x300/f9ebd2/b7950b?text=Coffee+Dripper" },
-            { id: 19, name: "Sunglasses", price: 1100, detail: "แว่นตากันแดดทรงเหลี่ยม ป้องกัน UV400", img: "https://placehold.co/400x300/f4f6f7/7f8c8d?text=Sunglasses" },
-            { id: 20, name: "Oil Diffuser", price: 1450, detail: "เครื่องพ่นไอน้ำอโรมาระบบอัลตราโซนิก", img: "https://placehold.co/400x300/f5eef8/8e44ad?text=Oil+Diffuser" }
+            { id: 1, name: "Vespa Sprint 150", price: 1500, detail: "โมเดลรถจิ๋วสีมิ้นต์สุดคลาสสิก", img: "https://placehold.co/400x300/a5d6a7/000000?text=Product+1" },
+            { id: 2, name: "Mechanical Keyboard", price: 2900, detail: "คีย์บอร์ดเสียงเพราะ พิมพ์สนุก", img: "https://placehold.co/400x300/e2e8f0/000000?text=Product+2" },
+            { id: 3, name: "Matcha Whisk Set", price: 850, detail: "ชุดแปรงชงมัทฉะครบเซ็ต สไตล์ญี่ปุ่น", img: "https://placehold.co/400x300/e2e8f0/000000?text=Product+3" },
+            { id: 4, name: "Minimalist Lamp", price: 1200, detail: "โคมไฟตั้งโต๊ะ แสงวอร์มไวท์", img: "https://placehold.co/400x300/e2e8f0/000000?text=Product+4" },
+            { id: 5, name: "Ceramic Coffee Cup", price: 350, detail: "แก้วเซรามิกแฮนด์เมด สีเขียวอ่อน", img: "https://placehold.co/400x300/e2e8f0/000000?text=Product+5" },
+            { id: 6, name: "Analog Wristwatch", price: 4500, detail: "นาฬิกาสายหนัง เรียบหรูดูดี", img: "https://placehold.co/400x300/e2e8f0/000000?text=Product+6" },
+            { id: 7, name: "Cotton Tote Bag", price: 250, detail: "กระเป๋าผ้ารักษ์โลก จุของได้เยอะ", img: "https://placehold.co/400x300/e2e8f0/000000?text=Product+7" },
+            { id: 8, name: "Wireless Earbuds", price: 1900, detail: "หูฟังไร้สาย เบสแน่น ตัดเสียงรบกวน", img: "https://placehold.co/400x300/e2e8f0/000000?text=Product+8" },
+            { id: 9, name: "Planner Notebook", price: 490, detail: "สมุดบันทึกแพลนเนอร์ ปกหนังพรีเมียม", img: "https://placehold.co/400x300/e2e8f0/000000?text=Product+9" },
+            { id: 10, name: "Green Tea Candle", price: 390, detail: "เทียนหอมกลิ่นชาเขียว ผ่อนคลายสมอง", img: "https://placehold.co/400x300/e2e8f0/000000?text=Product+10" },
+            { id: 11, name: "Succulent Pot", price: 120, detail: "กระถางต้นไม้จิ๋ว ตั้งโต๊ะเพิ่มความสดชื่น", img: "https://placehold.co/400x300/e2e8f0/000000?text=Product+11" },
+            { id: 12, name: "Leather Wallet", price: 890, detail: "กระเป๋าสตางค์ใบสั้น ช่องใส่บัตรเยอะ", img: "https://placehold.co/400x300/e2e8f0/000000?text=Product+12" },
+            { id: 13, name: "Glass Water Bottle", price: 450, detail: "ขวดน้ำแก้วสไตล์สปอร์ต พกพาสะดวก", img: "https://placehold.co/400x300/e2e8f0/000000?text=Product+13" },
+            { id: 14, name: "Eco-friendly Pen", price: 50, detail: "ปากกาลูกลื่น ทำจากวัสดุรีไซเคิล", img: "https://placehold.co/400x300/e2e8f0/000000?text=Product+14" },
+            { id: 15, name: "Desk Mat (Mint)", price: 650, detail: "แผ่นรองโต๊ะทำงานขนาดใหญ่ กันน้ำได้", img: "https://placehold.co/400x300/e2e8f0/000000?text=Product+15" },
+            { id: 16, name: "Canvas Sneakers", price: 1250, detail: "รองเท้าผ้าใบ นุ่มสบายเท้าทุกก้าว", img: "https://placehold.co/400x300/e2e8f0/000000?text=Product+16" },
+            { id: 17, name: "Table Fan", price: 790, detail: "พัดลมตั้งโต๊ะพกพา ปรับแรงลมได้เยอะ", img: "https://placehold.co/400x300/e2e8f0/000000?text=Product+17" },
+            { id: 18, name: "Coffee Dripper", price: 550, detail: "ถ้วยดริปกาแฟเซรามิกสไตล์สโลว์ไลฟ์", img: "https://placehold.co/400x300/e2e8f0/000000?text=Product+18" },
+            { id: 19, name: "Sunglasses", price: 1100, detail: "แว่นตากันแดดทรงเหลี่ยม ป้องกัน UV400", img: "https://placehold.co/400x300/e2e8f0/000000?text=Product+19" },
+            { id: 20, name: "Oil Diffuser", price: 1450, detail: "เครื่องพ่นไอน้ำอโรมาระบบอัลตราโซนิก", img: "https://placehold.co/400x300/e2e8f0/000000?text=Product+20" }
         ];
 
         // --- STATE MANAGEMENT ---
@@ -289,6 +322,7 @@
         function initSession(username) {
             const user = JSON.parse(localStorage.getItem('user_'+username));
             document.getElementById('user-navbar').classList.remove('hidden');
+            document.getElementById('hero-banner').classList.remove('hidden');
             document.getElementById('btn-view-profile').innerText = user.username;
             
             document.getElementById('prof-fullname').innerText = user.firstname + " " + user.lastname;
@@ -309,15 +343,17 @@
         function renderProducts() {
             const container = document.getElementById('product-list');
             container.innerHTML = PRODUCTS.map(p => `
-                <div class="bg-white p-3 sm:p-4 rounded-2xl shadow-sm border border-gray-100 flex flex-col" id="product-${p.id}">
-                    <img src="${p.img}" 
-                         onerror="this.onerror=null; this.src='https://placehold.co/400x300/e2e8f0/64748b?text=Product';" 
-                         class="w-full h-32 sm:h-44 object-cover rounded-xl mb-2 sm:mb-3 border border-gray-50 bg-gray-100 transition-transform duration-300 hover:scale-[1.02]">
-                    <h3 class="font-bold text-sm sm:text-base line-clamp-1">${p.name}</h3>
+                <div class="bg-white p-3 sm:p-4 rounded-2xl shadow-sm border border-gray-100 flex flex-col transition-all duration-200 hover:shadow-md" id="product-${p.id}">
+                    <div class="relative overflow-hidden rounded-xl mb-2 sm:mb-3 aspect-[4/3] bg-gray-50 border border-gray-100 flex items-center justify-center">
+                        <img src="${p.img}" 
+                             onerror="this.onerror=null; this.src='https://placehold.co/400x300/C8E6C9/000000?text=UNIQXE+SHOP';" 
+                             class="w-full h-full object-cover transition-transform duration-300 hover:scale-[1.03]">
+                    </div>
+                    <h3 class="font-black text-sm sm:text-base line-clamp-1 text-gray-800 dark:text-white">${p.name}</h3>
                     <p class="text-[11px] sm:text-xs text-gray-500 flex-grow line-clamp-2 mt-0.5">${p.detail}</p>
-                    <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 mt-3 sm:mt-4">
-                        <span class="font-bold text-sm sm:text-base text-green-700 dark:text-green-400">฿${p.price.toLocaleString()}</span>
-                        <button id="btn-add-${p.id}" onclick="addToCart(${p.id})" class="bg-black text-white dark:bg-neutral-700 dark:hover:bg-neutral-600 text-[10px] sm:text-xs px-2.5 py-2 rounded-lg font-bold hover:opacity-80 w-full sm:w-auto text-center transition-colors">เพิ่มลงตะกร้า</button>
+                    <div class="flex flex-row justify-between items-center gap-2 mt-3 sm:mt-4 border-t pt-2 border-gray-50">
+                        <span class="font-black text-sm sm:text-base text-emerald-700 dark:text-emerald-400">฿${p.price.toLocaleString()}</span>
+                        <button id="btn-add-${p.id}" onclick="addToCart(${p.id})" class="bg-black text-white dark:bg-zinc-700 dark:hover:bg-zinc-600 text-[10px] sm:text-xs px-2.5 py-1.5 rounded-lg font-bold hover:opacity-80 transition-colors shadow-sm">เพิ่มลงตะกร้า</button>
                     </div>
                 </div>
             `).join('');
@@ -333,7 +369,7 @@
             } else {
                 discountRate = 0;
                 msg.className = "text-xs mt-2 font-bold text-red-500";
-                msg.innerText = "ไม่พบรหัสส่วนลดนี้";
+                msg.innerText = "ไม่พบรหัสส่วนลดนี้ในระบบ";
             }
             updateCartUI();
         }
@@ -343,7 +379,7 @@
             const container = document.getElementById('cart-items-container');
             
             if(cart.length === 0) {
-                container.innerHTML = `<p class="text-center text-gray-400 py-10 text-sm">ไม่มีสินค้าในตะกร้า</p>`;
+                container.innerHTML = `<p class="text-center text-gray-400 py-10 text-sm">ไม่มีสินค้าในตะกร้าของคุณเลย</p>`;
                 document.getElementById('subtotal-price').innerText = "฿0";
                 document.getElementById('discount-price').innerText = "-฿0";
                 document.getElementById('cart-total-price').innerText = "฿0";
@@ -351,12 +387,12 @@
             }
 
             container.innerHTML = cart.map((p, idx) => `
-                <div class="flex justify-between items-center bg-gray-50 p-3 rounded-xl border border-gray-100">
+                <div class="flex justify-between items-center bg-gray-50 p-3 rounded-xl border border-gray-100 dark:bg-neutral-800">
                     <div class="flex items-center gap-3 min-w-0">
-                        <img src="${p.img}" onerror="this.onerror=null; this.src='https://placehold.co/100x100/e2e8f0/64748b?text=Thumb';" class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg object-cover border border-gray-200 flex-shrink-0">
+                        <img src="${p.img}" onerror="this.onerror=null; this.src='https://placehold.co/100x100/C8E6C9/000000?text=Thumb';" class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg object-cover border border-gray-200 flex-shrink-0">
                         <div class="min-w-0">
                             <p class="font-bold text-xs sm:text-sm truncate">${p.name}</p>
-                            <p class="text-[11px] sm:text-xs text-gray-500">฿${p.price.toLocaleString()}</p>
+                            <p class="text-[11px] sm:text-xs text-gray-500 dark:text-gray-400">฿${p.price.toLocaleString()}</p>
                         </div>
                     </div>
                     <button onclick="removeFromCart(${idx})" class="text-red-500 hover:text-red-700 p-1 flex-shrink-0"><i class="fa-solid fa-trash text-sm"></i></button>
@@ -378,7 +414,7 @@
         }
 
         function checkoutOrder() {
-            if(cart.length === 0) { alert('กรุณาเลือกสินค้าก่อนเช็คเอาท์'); return; }
+            if(cart.length === 0) { alert('กรุณาเลือกสินค้าก่อนเช็คเอาท์นะคร้าบ'); return; }
             
             const currentSession = localStorage.getItem('session');
             const user = JSON.parse(localStorage.getItem('user_' + currentSession));
@@ -417,11 +453,65 @@
         function renderOrderHistory(history) {
             const container = document.getElementById('order-history-container');
             if(!history || history.length === 0) {
-                container.innerHTML = `<p class="text-gray-400 text-center py-4">ยังไม่มีประวัติการสั่งซื้อ</p>`;
+                container.innerHTML = `<p class="text-gray-400 text-center py-4">ยังไม่มีประวัติการสั่งซื้อเลยครับ</p>`;
                 return;
             }
             container.innerHTML = history.map(h => `
-                <div class="p-2 border rounded-lg bg-gray-50 flex justify-between items-center mb-1">
+                <div class="p-2 border rounded-lg bg-gray-50 flex justify-between items-center mb-1 dark:bg-neutral-800 dark:border-neutral-700">
                     <div>
                         <span class="font-mono font-bold text-black dark:text-white block text-xs">${h.orderId}</span>
-                        <span class="text-
+                        <span class="text-[10px] text-gray-400">${h.date} (${h.itemsCount} ชิ้น)</span>
+                    </div>
+                    <span class="font-bold text-emerald-700 dark:text-emerald-400 text-xs">฿${h.total.toLocaleString()}</span>
+                </div>
+            `).join('');
+        }
+
+        function renderAdminTable() {
+            const tbody = document.getElementById('admin-user-table');
+            tbody.innerHTML = "";
+            for(let i=0; i<localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if(key.startsWith('user_')) {
+                    const user = JSON.parse(localStorage.getItem(key));
+                    if(user.username === 'admin') continue;
+                    tbody.innerHTML += `
+                        <tr class="border-b text-xs sm:text-sm">
+                            <td class="p-2 sm:p-3">${user.firstname} ${user.lastname}</td>
+                            <td class="p-2 sm:p-3 font-bold">${user.username}</td>
+                            <td class="p-2 sm:p-3"><button id="btn-del-${user.username}" onclick="deleteUser('${user.username}')" class="text-red-500 font-bold underline">ลบออก</button></td>
+                        </tr>
+                    `;
+                }
+            }
+        }
+
+        function deleteUser(u) {
+            if(confirm('ต้องการลบผู้ใช้ '+u+' หรือไม่?')) { localStorage.removeItem('user_'+u); renderAdminTable(); }
+        }
+
+        function logout() {
+            localStorage.removeItem('session');
+            location.reload();
+        }
+
+        function showView(viewId) {
+            const views = ['view-login', 'view-register', 'view-shop', 'view-cart', 'view-profile', 'view-admin'];
+            views.forEach(v => document.getElementById(v).classList.add('hidden'));
+            document.getElementById('view-' + viewId).classList.remove('hidden');
+            
+            const banner = document.getElementById('hero-banner');
+            if(viewId === 'login' || viewId === 'register') {
+                banner.classList.add('hidden');
+            } else if (localStorage.getItem('session')) {
+                banner.classList.remove('hidden');
+            }
+        }
+
+        window.onload = function() {
+            const session = localStorage.getItem('session');
+            if(session) initSession(session);
+        }
+    </script>
+</body>
+</html>
