@@ -2,118 +2,208 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <title>YoungTrips Mock Shopee</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock Shopee - Automation Practice</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: sans-serif; background: #f4f4f4; padding: 20px; }
-        .card { background: white; padding: 20px; border-radius: 8px; max-width: 400px; margin: auto; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        input { width: 90%; padding: 8px; margin: 8px 0; border: 1px solid #ccc; border-radius: 4px; }
-        button { background: #ff5500; color: white; border: none; padding: 10px; width: 100%; cursor: pointer; border-radius: 4px; margin-top: 10px; }
-        .link-btn { background: none; color: #0066cc; text-decoration: underline; width: auto; padding: 0; margin-top: 15px; font-size: 14px; }
+        .shopee-orange { background-color: #ee4d2d; }
+        .shopee-text { color: #ee4d2d; }
         .hidden { display: none; }
-        .message { color: #ff5500; font-weight: bold; margin: 10px 0; font-size: 14px; }
-        .success { color: green; }
     </style>
 </head>
-<body>
+<body class="bg-gray-100 min-h-screen">
 
-    <div class="card">
-        <h2 id="page-title">เข้าสู่ระบบ</h2>
-        <div id="msg-alert" class="message"></div>
+    <nav id="user-navbar" class="shopee-orange text-white p-4 shadow-md hidden sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <div class="font-bold text-xl">Shopee Mockup</div>
+            <div class="flex items-center gap-4">
+                <span id="nav-user-info" class="text-sm">Username: <b id="current-user-display"></b></span>
+                <button id="btn-logout" onclick="logout()" class="bg-white text-orange-600 px-3 py-1 rounded-md text-sm font-bold hover:bg-gray-100 transition">ออกจากระบบ</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-lg mx-auto mt-10 p-4">
         
-        <div id="login-section">
-            <input id="input-username" type="text" placeholder="ใส่ชื่อผู้ใช้">
-            <input id="input-password" type="password" placeholder="ใส่รหัสผ่าน">
-            <button id="btn-login" onclick="login()">ล็อกอิน</button>
-            <center><button id="btn-go-register" class="link-btn" onclick="toggleView('register')">ยังไม่มีบัญชี? สมัครสมาชิกที่นี่</button></center>
+        <div id="view-login" class="bg-white p-8 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-bold mb-6 text-center shopee-text">เข้าสู่ระบบ</h2>
+            <div id="login-error" class="text-red-500 text-sm mb-4 text-center"></div>
+            
+            <div class="space-y-4">
+                <input id="login-username" type="text" placeholder="ชื่อผู้ใช้" class="w-full border p-2 rounded focus:outline-none focus:ring-2 focus:ring-orange-500">
+                <input id="login-password" type="password" placeholder="รหัสผ่าน" class="w-full border p-2 rounded focus:outline-none focus:ring-2 focus:ring-orange-500">
+                <button id="btn-login" onclick="login()" class="w-full shopee-orange text-white font-bold py-2 rounded hover:opacity-90 transition">ล็อกอิน</button>
+            </div>
+            
+            <div class="mt-6 text-center text-sm text-gray-500">
+                ยังไม่มีบัญชี? <button id="btn-go-register" onclick="showView('register')" class="text-blue-500 hover:underline">สมัครสมาชิกที่นี่</button>
+            </div>
         </div>
 
-        <div id="register-section" class="hidden">
-            <input id="reg-username" type="text" placeholder="ตั้งชื่อผู้ใช้ใหม่">
-            <input id="reg-password" type="password" placeholder="ตั้งรหัสผ่าน">
-            <button id="btn-register" onclick="register()">ยืนยันการสมัครสมาชิก</button>
-            <center><button id="btn-go-login" class="link-btn" onclick="toggleView('login')">มีบัญชีอยู่แล้ว? กลับไปหน้าล็อกอิน</button></center>
+        <div id="view-register" class="bg-white p-8 rounded-lg shadow-lg hidden">
+            <h2 class="text-2xl font-bold mb-6 text-center shopee-text">สมัครสมาชิก</h2>
+            <div id="reg-error" class="text-red-500 text-sm mb-4 text-center"></div>
+            
+            <div class="space-y-3">
+                <input id="reg-username" type="text" placeholder="Username" class="w-full border p-2 rounded">
+                <input id="reg-password" type="password" placeholder="Password" class="w-full border p-2 rounded">
+                <input id="reg-confirm-password" type="password" placeholder="Confirm Password" class="w-full border p-2 rounded">
+                <input id="reg-phone" type="text" placeholder="Phone Number" class="w-full border p-2 rounded">
+                <input id="reg-email" type="email" placeholder="Email" class="w-full border p-2 rounded">
+                
+                <button id="btn-register" onclick="register()" class="w-full shopee-orange text-white font-bold py-2 rounded hover:opacity-90">ยืนยันการสมัคร</button>
+                <button id="btn-back-login" onclick="showView('login')" class="w-full text-gray-500 text-sm mt-2">ย้อนกลับ</button>
+            </div>
         </div>
 
-        <div id="welcome-section" class="hidden">
-            <p>สวัสดีคุณ <b id="user-display"></b> !</p>
-            <hr>
-            <p>สินค้า: โมเดลรถ Vespa Sprint (฿1,500)</p>
-            <button id="btn-add-cart" onclick="addCart()">🛒 หยิบใส่ตะกร้า</button>
-            <p>จำนวนในตะกร้า: <b id="cart-count">0</b> ชิ้น</p>
-            <button id="btn-logout" style="background: #666;" onclick="logout()">ออกจากระบบ</button>
+        <div id="view-user-shop" class="bg-white p-8 rounded-lg shadow-lg hidden">
+            <h2 class="text-2xl font-bold mb-4 shopee-text">ยินดีต้อนรับสู่ร้านค้า</h2>
+            <div class="border-2 border-dashed border-gray-200 p-10 text-center text-gray-400">
+                รายการสินค้าจะแสดงที่นี่ (สำหรับการทำเทสพื้นฐาน)
+            </div>
+        </div>
+
+    </div>
+
+    <div id="view-admin-dashboard" class="max-w-4xl mx-auto mt-10 p-4 hidden">
+        <div class="bg-white p-8 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-bold mb-6 shopee-text flex items-center gap-2">
+                <span class="bg-orange-100 p-2 rounded-full">🛡️</span> Admin Dashboard
+            </h2>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-gray-100 text-gray-600 text-sm">
+                            <th class="p-3 border">Username</th>
+                            <th class="p-3 border">Phone</th>
+                            <th class="p-3 border">Email</th>
+                            <th class="p-3 border">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-user-table-body">
+                        </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
     <script>
-        // ใช้ sessionStorage จำลองฐานข้อมูลชั่วคราว (ปิดบราวเซอร์ข้อมูลจะรีเซ็ตใหม่ เพื่อให้เหมาะกับการรันเทสซ้ำๆ)
+        // ─── ระบบจัดการข้อมูล (ใช้ LocalStorage เพื่อให้ข้อมูลคงอยู่) ───
+        
+        // บัญชี Admin ตั้งต้น
+        if (!localStorage.getItem('user_admin')) {
+            localStorage.setItem('user_admin', JSON.stringify({
+                username: 'admin', password: '1234', phone: '000', email: 'admin@shopee.com'
+            }));
+        }
+
         function register() {
-            var user = document.getElementById('reg-username').value;
-            var pass = document.getElementById('reg-password').value;
-            var alertBox = document.getElementById('msg-alert');
+            const u = document.getElementById('reg-username').value;
+            const p = document.getElementById('reg-password').value;
+            const cp = document.getElementById('reg-confirm-password').value;
+            const ph = document.getElementById('reg-phone').value;
+            const em = document.getElementById('reg-email').value;
+            const err = document.getElementById('reg-error');
 
-            if(user === "" || pass === "") {
-                alertBox.innerText = "กรุณากรอกข้อมูลให้ครบถ้วน";
-                alertBox.className = "message";
-                return;
-            }
+            if (!u || !p || !cp || !ph || !em) { err.innerText = "กรุณากรอกข้อมูลให้ครบ"; return; }
+            if (p !== cp) { err.innerText = "รหัสผ่านไม่ตรงกัน"; return; }
+            if (localStorage.getItem('user_' + u)) { err.innerText = "ชื่อผู้ใช้นี้มีในระบบแล้ว"; return; }
 
-            sessionStorage.setItem('mock_user_' + user, pass);
-            alertBox.innerText = "สมัครสมาชิกสำเร็จ! กรุณาล็อกอิน";
-            alertBox.className = "message success";
-            toggleView('login');
+            const userData = { username: u, password: p, phone: ph, email: em };
+            localStorage.setItem('user_' + u, JSON.stringify(userData));
+            
+            alert("สมัครสมาชิกสำเร็จ!");
+            showView('login');
         }
 
         function login() {
-            var user = document.getElementById('input-username').value;
-            var pass = document.getElementById('input-password').value;
-            var alertBox = document.getElementById('msg-alert');
-            
-            var savedPassword = sessionStorage.getItem('mock_user_' + user);
+            const u = document.getElementById('login-username').value;
+            const p = document.getElementById('login-password').value;
+            const err = document.getElementById('login-error');
 
-            if(savedPassword && savedPassword === pass) {
-                alertBox.innerText = "";
-                document.getElementById('user-display').innerText = user;
-                toggleView('welcome');
-            } else {
-                alertBox.innerText = "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
-                alertBox.className = "message";
+            const storedData = localStorage.getItem('user_' + u);
+            if (storedData) {
+                const user = JSON.parse(storedData);
+                if (user.password === p) {
+                    // Login สำเร็จ
+                    localStorage.setItem('session_user', u);
+                    initSession(u);
+                    return;
+                }
             }
+            err.innerText = "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
         }
 
         function logout() {
-            document.getElementById('input-username').value = "";
-            document.getElementById('input-password').value = "";
-            document.getElementById('msg-alert').innerText = "ออกจากระบบเรียบร้อย";
-            document.getElementById('msg-alert').className = "message success";
-            toggleView('login');
+            localStorage.removeItem('session_user');
+            location.reload();
         }
 
-        function addCart() {
-            var count = document.getElementById('cart-count').innerText;
-            document.getElementById('cart-count').innerText = parseInt(count) + 1;
-        }
+        function initSession(username) {
+            document.getElementById('nav-user-info').classList.remove('hidden');
+            document.getElementById('current-user-display').innerText = username;
+            document.getElementById('user-navbar').classList.remove('hidden');
 
-        function toggleView(view) {
-            var loginSec = document.getElementById('login-section');
-            var regSec = document.getElementById('register-section');
-            var welcomeSec = document.getElementById('welcome-section');
-            var title = document.getElementById('page-title');
-
-            loginSec.classList.add('hidden');
-            regSec.classList.add('hidden');
-            welcomeSec.classList.add('hidden');
-
-            if(view === 'login') {
-                loginSec.classList.remove('hidden');
-                title.innerText = "เข้าสู่ระบบ";
-            } else if(view === 'register') {
-                regSec.classList.remove('hidden');
-                title.innerText = "สมัครสมาชิก";
-            } else if(view === 'welcome') {
-                welcomeSec.classList.remove('hidden');
-                title.innerText = "หน้าซื้อของ";
+            if (username === 'admin') {
+                showView('admin');
+                renderAdminTable();
+            } else {
+                showView('shop');
             }
         }
+
+        function renderAdminTable() {
+            const tbody = document.getElementById('admin-user-table-body');
+            tbody.innerHTML = '';
+            
+            // วนลูปหา User ทั้งหมดใน LocalStorage
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith('user_')) {
+                    const user = JSON.parse(localStorage.getItem(key));
+                    if (user.username === 'admin') continue; // ไม่แสดง admin ในตารางลบ
+
+                    const row = `
+                        <tr class="text-sm border-b hover:bg-gray-50" id="row-${user.username}">
+                            <td class="p-3 border">${user.username}</td>
+                            <td class="p-3 border">${user.phone}</td>
+                            <td class="p-3 border">${user.email}</td>
+                            <td class="p-3 border">
+                                <button id="btn-delete-${user.username}" onclick="deleteUser('${user.username}')" class="text-red-500 font-bold hover:underline">ลบออก</button>
+                            </td>
+                        </tr>
+                    `;
+                    tbody.innerHTML += row;
+                }
+            }
+        }
+
+        function deleteUser(username) {
+            if (confirm('ยืนยันที่จะลบผู้ใช้ ' + username + ' ใช่หรือไม่?')) {
+                localStorage.removeItem('user_' + username);
+                renderAdminTable();
+            }
+        }
+
+        function showView(view) {
+            // ซ่อนทุกหน้า
+            document.getElementById('view-login').classList.add('hidden');
+            document.getElementById('view-register').classList.add('hidden');
+            document.getElementById('view-user-shop').classList.add('hidden');
+            document.getElementById('view-admin-dashboard').classList.add('hidden');
+
+            if (view === 'login') document.getElementById('view-login').classList.remove('hidden');
+            if (view === 'register') document.getElementById('view-register').classList.remove('hidden');
+            if (view === 'shop') document.getElementById('view-user-shop').classList.remove('hidden');
+            if (view === 'admin') document.getElementById('view-admin-dashboard').classList.remove('hidden');
+        }
+
+        // ตรวจสอบ Session เมื่อเปิดหน้าเว็บ
+        window.onload = function() {
+            const session = localStorage.getItem('session_user');
+            if (session) initSession(session);
+        };
     </script>
 </body>
 </html>
