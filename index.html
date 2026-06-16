@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>YoungTrips Mock Shop</title>
+    <style>
+        body { font-family: sans-serif; background: #f4f4f4; padding: 20px; }
+        .card { background: white; padding: 20px; border-radius: 8px; max-width: 400px; margin: auto; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        input { wIdth: 90%; padding: 8px; margin: 8px 0; }
+        button { background: #ff5500; color: white; border: none; padding: 10px; wIdth: 100%; cursor: pointer; border-radius: 4px; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2 id="page-title">เข้าสู่ระบบ (Mockup)</h2>
+        
+        <div id="login-section">
+            <input id="input-username" type="text" placeholder="ใส่ชื่อผู้ใช้">
+            <input id="input-password" type="password" placeholder="ใส่รหัสผ่าน">
+            <button id="btn-login" onclick="login()">ล็อกอิน</button>
+        </div>
+
+        <div id="welcome-section" class="hidden">
+            <p>ยินดีต้อนรับคุณ <b id="user-display"></b></p>
+            <hr>
+            <p>สินค้า: โมเดลรถ Vespa Sprint (฿1,500)</p>
+            <button id="btn-add-cart" onclick="addCart()">🛒 หยิบใส่ตะกร้า</button>
+            <p>จำนวนในตะกร้า: <b id="cart-count">0</b> ชิ้น</p>
+        </div>
+    </div>
+
+    <script>
+        function login() {
+            var user = document.getElementById('input-username').value;
+            if(user !== "") {
+                document.getElementById('user-display').innerText = user;
+                document.getElementById('login-section').classList.add('hidden');
+                document.getElementById('welcome-section').classList.remove('hidden');
+                document.getElementById('page-title').innerText = "หน้าซื้อของ";
+            }
+        }
+        function addCart() {
+            var count = document.getElementById('cart-count').innerText;
+            document.getElementById('cart-count').innerText = parseInt(count) + 1;
+        }
+    </script>
+</body>
+</html>
