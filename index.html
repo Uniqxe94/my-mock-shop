@@ -124,34 +124,33 @@
     </div>
 
     <script>
-        // --- DATA: 20 PRODUCTS ---
+        // --- DATA: 20 PRODUCTS WITH SOLID PLACEHOLDERS ---
         const PRODUCTS = [
-            { id: 1, name: "Vespa Sprint 150", price: 1500, detail: "โมเดลรถจิ๋วสีมิ้นต์สุดคลาสสิก", img: "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=300" },
-            { id: 2, name: "Mechanical Keyboard", price: 2900, detail: "คีย์บอร์ดเสียงเพราะ พิมพ์สนุก", img: "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=300" },
-            { id: 3, name: "Matcha Whisk Set", price: 850, detail: "ชุดชงมัทฉะครบเซ็ต สไตล์ญี่ปุ่น", img: "https://images.unsplash.com/photo-1582793988951-9aed55099991?w=300" },
-            { id: 4, name: "Minimalist Lamp", price: 1200, detail: "โคมไฟตั้งโต๊ะ แสงวอร์มไวท์", img: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=300" },
-            { id: 5, name: "Ceramic Coffee Cup", price: 350, detail: "แก้วเซรามิกแฮนด์เมด สีเขียวอ่อน", img: "https://images.unsplash.com/photo-1514218953589-2d7d37efd2ec?w=300" },
-            { id: 6, name: "Analog Wristwatch", price: 4500, detail: "นาฬิกาสายหนัง เรียบหรูดูดี", img: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=300" },
-            { id: 7, name: "Cotton Tote Bag", price: 250, detail: "กระเป๋าผ้ารักษ์โลก จุของได้เยอะ", img: "https://images.unsplash.com/photo-1544816155-12df9643f363?w=300" },
-            { id: 8, name: "Wireless Earbuds", price: 1900, detail: "หูฟังไร้สาย เบสหนัก ตัดเสียงรบกวน", img: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=300" },
-            { id: 9, name: "Planner Notebook", price: 490, detail: "สมุดจดบันทึก ปกหนังเทียม", img: "https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=300" },
-            { id: 10, name: "Green Tea Scented Candle", price: 390, detail: "เทียนหอมกลิ่นชาเขียว ผ่อนคลาย", img: "https://images.unsplash.com/photo-1603006905003-be475563bc59?w=300" },
-            { id: 11, name: "Succulent Pot", price: 120, detail: "ต้นไม้จิ๋ว ประดับโต๊ะทำงาน", img: "https://images.unsplash.com/photo-1509423350716-97f9360b4e09?w=300" },
-            { id: 12, name: "Leather Wallet", price: 890, detail: "กระเป๋าสตางค์ใบสั้น ทนทาน", img: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=300" },
-            { id: 13, name: "Glass Water Bottle", price: 450, detail: "ขวดน้ำแก้ว ทนความร้อน", img: "https://images.unsplash.com/photo-1602143303707-e41713f3e797?w=300" },
-            { id: 14, name: "Eco-friendly Pen", price: 50, detail: "ปากกาลูกลื่น ทำจากวัสดุรีไซเคิล", img: "https://images.unsplash.com/photo-1585336139118-132f507ad742?w=300" },
-            { id: 15, name: "Desk Mat (Mint)", price: 650, detail: "แผ่นรองโต๊ะขนาดใหญ่ สีเขียวมิ้นต์", img: "https://images.unsplash.com/photo-1616627547584-bf28cee262db?w=300" },
-            { id: 16, name: "Canvas Sneakers", price: 1250, detail: "รองเท้าผ้าใบ สวมใส่สบาย", img: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=300" },
-            { id: 17, name: "Table Fan (Portable)", price: 790, detail: "พัดลมพกพา ชาร์จ USB ได้", img: "https://images.unsplash.com/photo-1618944847023-38aa001235f0?w=300" },
-            { id: 18, name: "Coffee Dripper", price: 550, detail: "อุปกรณ์ดริปกาแฟ เซรามิกขาว", img: "https://images.unsplash.com/photo-1544787210-2213d84ad96b?w=300" },
-            { id: 19, name: "Sunglasses", price: 1100, detail: "แว่นกันแดดทรงวินเทจ", img: "https://images.unsplash.com/photo-1511499767390-90342f56771f?w=300" },
-            { id: 20, name: "Essential Oil Diffuser", price: 1450, detail: "เครื่องพ่นไอน้ำ เพิ่มความชื้น", img: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=300" }
+            { id: 1, name: "Vespa Sprint 150", price: 1500, detail: "โมเดลรถจิ๋วสีมิ้นต์สุดคลาสสิก", img: "https://placehold.co/300x200/a5d6a7/000000?text=Product+1" },
+            { id: 2, name: "Mechanical Keyboard", price: 2900, detail: "คีย์บอร์ดเสียงเพราะ พิมพ์สนุก", img: "https://placehold.co/300x200/e0e0e0/000000?text=Product+2" },
+            { id: 3, name: "Matcha Whisk Set", price: 850, detail: "ชุดชงมัทฉะครบเซ็ต สไตล์ญี่ปุ่น", img: "https://placehold.co/300x200/e0e0e0/000000?text=Product+3" },
+            { id: 4, name: "Minimalist Lamp", price: 1200, detail: "โคมไฟตั้งโต๊ะ แสงวอร์มไวท์", img: "https://placehold.co/300x200/e0e0e0/000000?text=Product+4" },
+            { id: 5, name: "Ceramic Coffee Cup", price: 350, detail: "แก้วเซรามิกแฮนด์เมด สีเขียวอ่อน", img: "https://placehold.co/300x200/e0e0e0/000000?text=Product+5" },
+            { id: 6, name: "Analog Wristwatch", price: 4500, detail: "นาฬิกาสายหนัง เรียบหรูดูดี", img: "https://placehold.co/300x200/e0e0e0/000000?text=Product+6" },
+            { id: 7, name: "Cotton Tote Bag", price: 250, detail: "กระเป๋าผ้ารักษ์โลก จุของได้เยอะ", img: "https://placehold.co/300x200/e0e0e0/000000?text=Product+7" },
+            { id: 8, name: "Wireless Earbuds", price: 1900, detail: "หูฟังไร้สาย เบสหนัก ตัดเสียงรบกวน", img: "https://placehold.co/300x200/e0e0e0/000000?text=Product+8" },
+            { id: 9, name: "Planner Notebook", price: 490, detail: "สมุดจดบันทึก ปกหนังเทียม", img: "https://placehold.co/300x200/e0e0e0/000000?text=Product+9" },
+            { id: 10, name: "Green Tea Candle", price: 390, detail: "เทียนหอมกลิ่นชาเขียว ผ่อนคลาย", img: "https://placehold.co/300x200/e0e0e0/000000?text=Product+10" },
+            { id: 11, name: "Succulent Pot", price: 120, detail: "ต้นไม้จิ๋ว ประดับโต๊ะทำงาน", img: "https://placehold.co/300x200/e0e0e0/000000?text=Product+11" },
+            { id: 12, name: "Leather Wallet", price: 890, detail: "กระเป๋าสตางค์ใบสั้น ทนทาน", img: "https://placehold.co/300x200/e0e0e0/000000?text=Product+12" },
+            { id: 13, name: "Glass Water Bottle", price: 450, detail: "ขวดน้ำแก้ว ทนความร้อน", img: "https://placehold.co/300x200/e0e0e0/000000?text=Product+13" },
+            { id: 14, name: "Eco-friendly Pen", price: 50, detail: "ปากกาลูกลื่น ทำจากวัสดุรีไซเคิล", img: "https://placehold.co/300x200/e0e0e0/000000?text=Product+14" },
+            { id: 15, name: "Desk Mat (Mint)", price: 650, detail: "แผ่นรองโต๊ะขนาดใหญ่ สีเขียวมิ้นต์", img: "https://placehold.co/300x200/e0e0e0/000000?text=Product+15" },
+            { id: 16, name: "Canvas Sneakers", price: 1250, detail: "รองเท้าผ้าใบ สวมใส่สบาย", img: "https://placehold.co/300x200/e0e0e0/000000?text=Product+16" },
+            { id: 17, name: "Table Fan (Portable)", price: 790, detail: "พัดลมพกพา ชาร์จ USB ได้", img: "https://placehold.co/300x200/e0e0e0/000000?text=Product+17" },
+            { id: 18, name: "Coffee Dripper", price: 550, detail: "อุปกรณ์ดริปกาแฟ เซรามิกขาว", img: "https://placehold.co/300x200/e0e0e0/000000?text=Product+18" },
+            { id: 19, name: "Sunglasses", price: 1100, detail: "แว่นกันแดดทรงวินเทจ", img: "https://placehold.co/300x200/e0e0e0/000000?text=Product+19" },
+            { id: 20, name: "Oil Diffuser", price: 1450, detail: "เครื่องพ่นไอน้ำ เพิ่มความชื้น", img: "https://placehold.co/300x200/e0e0e0/000000?text=Product+20" }
         ];
 
         // --- STATE MANAGEMENT ---
         let cart = [];
         
-        // บัญชี Admin พื้นฐาน
         if(!localStorage.getItem('user_admin')) {
             localStorage.setItem('user_admin', JSON.stringify({
                 firstname: "ผู้ดูแล", lastname: "ระบบ", username: "admin", password: "1234", gender: "อื่นๆ", phone: "000", email: "admin@uniqxe.com"
@@ -202,7 +201,6 @@
             document.getElementById('user-navbar').classList.remove('hidden');
             document.getElementById('btn-view-profile').innerText = user.username;
             
-            // ใส่ข้อมูลโปรไฟล์
             document.getElementById('prof-fullname').innerText = user.firstname + " " + user.lastname;
             document.getElementById('prof-gender').innerText = user.gender;
             document.getElementById('prof-username').innerText = user.username;
@@ -220,7 +218,7 @@
             const container = document.getElementById('product-list');
             container.innerHTML = PRODUCTS.map(p => `
                 <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex flex-col" id="product-${p.id}">
-                    <img src="${p.img}" class="w-full h-40 object-cover rounded-xl mb-3">
+                    <img src="${p.img}" class="w-full h-40 object-cover rounded-xl mb-3 border border-gray-100">
                     <h3 class="font-bold text-lg">${p.name}</h3>
                     <p class="text-xs text-gray-500 flex-grow">${p.detail}</p>
                     <div class="flex justify-between items-center mt-4">
@@ -251,7 +249,7 @@
             container.innerHTML = cart.map((p, idx) => `
                 <div class="flex justify-between items-center bg-gray-50 p-3 rounded-xl border border-gray-100">
                     <div class="flex items-center gap-3">
-                        <img src="${p.img}" class="w-12 h-12 rounded-lg object-cover">
+                        <img src="${p.img}" class="w-12 h-12 rounded-lg object-cover border border-gray-200">
                         <div>
                             <p class="font-bold text-sm">${p.name}</p>
                             <p class="text-xs text-gray-500">฿${p.price.toLocaleString()}</p>
