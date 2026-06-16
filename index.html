@@ -204,7 +204,7 @@
     </div>
 
     <script>
-        // --- 🟩 ฝังโค้ดรูปภาพสินค้าให้แสดงผลบล็อกสีตรงตามดีไซน์เป๊ะๆ แก้อาการรูปไม่ขึ้น 🟩 ---
+        // --- 🟩 ฝังโค้ด SVG Base64 ให้แสดงผลรูปสินค้าพาสเทลแน่นอน 🟩 ---
         const mintImg = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'><rect width='100%' height='100%' fill='%23A5D6A7'/><text x='50%' y='55%' font-family='sans-serif' font-weight='bold' font-size='28' fill='%23000000' text-anchor='middle'>Product 1</text></svg>";
         const greyImg = (num) => `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'><rect width='100%' height='100%' fill='%23E0E0E0'/><text x='50%' y='55%' font-family='sans-serif' font-weight='bold' font-size='28' fill='%23000000' text-anchor='middle'>Product ${num}</text></svg>`;
 
@@ -236,9 +236,15 @@
         let discountRate = 0;
         let isDarkMode = false;
         
+        // สร้างบัญชีผู้ใช้เริ่มต้นสำหรับทดสอบระบบ
         if(!localStorage.getItem('user_admin')) {
             localStorage.setItem('user_admin', JSON.stringify({
                 firstname: "ผู้ดูแล", lastname: "ระบบ", username: "admin", password: "1234", gender: "อื่นๆ", phone: "000", email: "admin@uniqxe.com", history: []
+            }));
+        }
+        if(!localStorage.getItem('user_testuser')) {
+            localStorage.setItem('user_testuser', JSON.stringify({
+                firstname: "ทดสอบ", lastname: "ระบบ", username: "testuser", password: "1234", gender: "ชาย", phone: "0999999999", email: "test@uniqxe.com", history: []
             }));
         }
 
@@ -332,8 +338,12 @@
 
             renderOrderHistory(user.history || []);
 
-            if(username === 'admin') { showView('admin'); renderAdminTable(); }
-            else { showView('shop'); }
+            if(username === 'admin') { 
+                showView('admin'); 
+                renderAdminTable(); 
+            } else { 
+                showView('shop'); 
+            }
             
             renderProducts();
             updateCartUI();
@@ -348,4 +358,180 @@
                     </div>
                     <h3 class="font-bold text-sm sm:text-base line-clamp-1 text-gray-900 dark:text-white">${p.name}</h3>
                     <p class="text-[11px] sm:text-xs text-gray-400 flex-grow line-clamp-2 mt-0.5">${p.detail}</p>
-                    <div class="flex flex-row justify-between items-center gap-2 mt
+                    <div class="flex flex-row justify-between items-center gap-2 mt-3 border-t pt-2 border-gray-50">
+                        <span class="font-bold text-sm sm:text-base text-green-700 dark:text-green-400">฿${p.price.toLocaleString()}</span>
+                        <button id="btn-add-${p.id}" onclick="addToCart(${p.id})" class="bg-black text-white dark:bg-zinc-700 text-[10px] sm:text-xs px-3 py-1.5 rounded-md font-bold hover:opacity-80 transition-colors">เพิ่มลงตะกร้า</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function applyCoupon() {
+            const code = document.getElementById('cart-coupon-input').value.trim();
+            const msg = document.getElementById('coupon-message');
+            if(code === "UNIQXE10") {
+                discountRate = 0.10; 
+                msg.className = "text-xs mt-2 font-bold text-green-600";
+                msg.innerText = "ใช้คูปองสำเร็จ! รับส่วนลด 10%";
+            } else {
+                discountRate = 0;
+                msg.className = "text-xs mt-2 font-bold text-red-500";
+                msg.innerText = "ไม่พบรหัสส่วนลดนี้ในระบบ";
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            document.getElementById('cart-badge-count').innerText = cart.length;
+            const container = document.getElementById('cart-items-container');
+            
+            if(cart.length === 0) {
+                container.innerHTML = `<p class="text-center text-gray-400 py-10 text-sm">ไม่มีสินค้าในตะกร้าของคุณเลย</p>`;
+                document.getElementById('subtotal-price').innerText = "฿0";
+                document.getElementById('discount-price').innerText = "-฿0";
+                document.getElementById('cart-total-price').innerText = "฿0";
+                return;
+            }
+
+            container.innerHTML = cart.map((p, idx) => `
+                <div class="flex justify-between items-center bg-gray-50 p-3 rounded-xl border border-gray-100 dark:bg-neutral-800">
+                    <div class="flex items-center gap-3 min-w-0">
+                        <img src="${p.img}" class="w-10 h-10 rounded-lg object-cover border flex-shrink-0">
+                        <div class="min-w-0">
+                            <p class="font-bold text-xs sm:text-sm truncate">${p.name}</p>
+                            <p class="text-[11px] sm:text-xs text-gray-500 dark:text-gray-400">฿${p.price.toLocaleString()}</p>
+                        </div>
+                    </div>
+                    <button onclick="removeFromCart(${idx})" class="text-red-500 hover:text-red-700 p-1 flex-shrink-0"><i class="fa-solid fa-trash text-sm"></i></button>
+                </div>
+            `).join('');
+
+            const subtotal = cart.reduce((sum, p) => sum + p.price, 0);
+            const discount = subtotal * discountRate;
+            const total = subtotal - discount;
+
+            document.getElementById('subtotal-price').innerText = "฿" + subtotal.toLocaleString();
+            document.getElementById('discount-price').innerText = "-฿" + discount.toLocaleString();
+            document.getElementById('cart-total-price').innerText = "฿" + total.toLocaleString();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function checkoutOrder() {
+            if(cart.length === 0) { alert('กรุณาเลือกสินค้าก่อนเช็คเอาท์นะคร้าบ'); return; }
+            
+            const currentSession = localStorage.getItem('session');
+            const user = JSON.parse(localStorage.getItem('user_' + currentSession));
+            
+            const orderId = "UNQ-" + Math.floor(100000 + Math.random() * 900000);
+            const subtotal = cart.reduce((sum, p) => sum + p.price, 0);
+            const finalTotal = subtotal - (subtotal * discountRate);
+
+            const newOrder = {
+                orderId: orderId,
+                itemsCount: cart.length,
+                total: finalTotal,
+                date: new Date().toLocaleDateString('th-TH')
+            };
+
+            if(!user.history) user.history = [];
+            user.history.unshift(newOrder); 
+            localStorage.setItem('user_' + currentSession, JSON.stringify(user));
+
+            cart = [];
+            discountRate = 0;
+            document.getElementById('cart-coupon-input').value = "";
+            document.getElementById('coupon-message').innerText = "";
+            updateCartUI();
+
+            document.getElementById('modal-order-id').innerText = orderId;
+            document.getElementById('success-modal').classList.remove('hidden');
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('success-modal').classList.add('hidden');
+            const currentSession = localStorage.getItem('session');
+            initSession(currentSession);
+        }
+
+        function renderOrderHistory(history) {
+            const container = document.getElementById('order-history-container');
+            if(!history || history.length === 0) {
+                container.innerHTML = `<p class="text-gray-400 text-center py-4">ยังไม่มีประวัติการสั่งซื้อเลยครับ</p>`;
+                return;
+            }
+            container.innerHTML = history.map(h => `
+                <div class="p-2 border rounded-lg bg-gray-50 flex justify-between items-center mb-1 dark:bg-neutral-800 dark:border-neutral-700">
+                    <div>
+                        <span class="font-mono font-bold text-black dark:text-white block text-xs">${h.orderId}</span>
+                        <span class="text-[10px] text-gray-400">${h.date} (${h.itemsCount} ชิ้น)</span>
+                    </div>
+                    <span class="font-bold text-green-700 text-xs">฿${h.total.toLocaleString()}</span>
+                </div>
+            `).join('');
+        }
+
+        function renderAdminTable() {
+            const tbody = document.getElementById('admin-user-table');
+            tbody.innerHTML = "";
+            for(let i=0; i<localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if(key.startsWith('user_')) {
+                    const user = JSON.parse(localStorage.getItem(key));
+                    if(user.username === 'admin') continue;
+                    tbody.innerHTML += `
+                        <tr class="border-b text-xs sm:text-sm">
+                            <td class="p-2 sm:p-3">${user.firstname} ${user.lastname}</td>
+                            <td class="p-2 sm:p-3 font-bold">${user.username}</td>
+                            <td class="p-2 sm:p-3"><button id="btn-del-${user.username}" onclick="deleteUser('${user.username}')" class="text-red-500 font-bold underline">ลบออก</button></td>
+                        </tr>
+                    `;
+                }
+            }
+        }
+
+        function deleteUser(u) {
+            if(confirm('ต้องการลบผู้ใช้ '+u+' หรือไม่?')) { localStorage.removeItem('user_'+u); renderAdminTable(); }
+        }
+
+        function logout() {
+            localStorage.removeItem('session');
+            location.reload();
+        }
+
+        function showView(viewId) {
+            const views = ['view-login', 'view-register', 'view-shop', 'view-cart', 'view-profile', 'view-admin'];
+            views.forEach(v => {
+                const el = document.getElementById(v);
+                if(el) el.classList.add('hidden');
+            });
+            
+            const targetView = document.getElementById('view-' + viewId);
+            if(targetView) targetView.classList.remove('hidden');
+            
+            const banner = document.getElementById('hero-banner');
+            const navbar = document.getElementById('user-navbar');
+            
+            if(viewId === 'login' || viewId === 'register') {
+                if(banner) banner.classList.add('hidden');
+                if(navbar) navbar.classList.add('hidden');
+            } else if (localStorage.getItem('session')) {
+                if(banner) banner.classList.remove('hidden');
+                if(navbar) navbar.classList.remove('hidden');
+            }
+        }
+
+        window.onload = function() {
+            const session = localStorage.getItem('session');
+            if(session) {
+                initSession(session);
+            } else {
+                showView('login');
+            }
+        }
+    </script>
+</body>
+</html>
