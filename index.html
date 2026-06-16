@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Uniqxe Shop - Mobile Friendly Practice</title>
+    <title>Uniqxe Shop - High Performance Automation Practice</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script>
@@ -14,7 +14,7 @@
     <style>
         .mint-bg { background-color: #f1f8e9; }
         .mint-accent { background-color: #a5d6a7; }
-        .hidden { display: none; }
+        .hidden { display: none !important; }
         .cart-badge { position: absolute; top: -5px; right: -8px; background: #ff5252; color: white; border-radius: 50%; padding: 1px 5px; font-size: 10px; font-weight: bold; }
         
         .dark .mint-bg { background-color: #121212; color: #ffffff; }
@@ -43,7 +43,7 @@
                 
                 <div class="flex items-center gap-3 sm:gap-4 border-l border-green-400 pl-3 sm:pl-6 dark:border-emerald-600">
                     <span class="text-xs sm:text-sm truncate max-w-[80px] sm:max-w-none">คุณ: <button id="btn-view-profile" onclick="showView('profile')" class="font-bold underline hover:text-gray-700 dark:hover:text-gray-300"></button></span>
-                    <button id="btn-logout" onclick="logout()" class="bg-black text-white px-2.5 py-1.5 rounded-md text-[10px] sm:text-xs font-bold hover:bg-gray-800 dark:bg-white dark:text-black transition">ออก</button>
+                    <button id="btn-logout" onclick="logout()" class="bg-black text-white px-2.5 py-1.5 rounded-md text-[10px] sm:text-xs font-bold hover:bg-gray-800 dark:bg-white dark:text-black transition">ออกจากระบบ</button>
                 </div>
             </div>
         </div>
@@ -175,12 +175,12 @@
     </div>
 
     <script>
-        // --- DATA: 20 PRODUCTS WITH REAL PICTURES ---
+        // --- DATA: 20 PRODUCTS WITH REAL PICTURES (FIXED BUG 'โcmd') ---
         const PRODUCTS = [
             { id: 1, name: "Vespa Sprint 150", price: 1500, detail: "โมเดลรถจิ๋วสีมิ้นต์สุดคลาสสิก", img: "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=400&q=80" },
             { id: 2, name: "Mechanical Keyboard", price: 2900, detail: "คีย์บอร์ดเสียงเพราะ พิมพ์สนุก ไฟ RGB", img: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400&q=80" },
             { id: 3, name: "Matcha Whisk Set", price: 850, detail: "ชุดแปรงชงมัทฉะไม้ไผ่ครบเซ็ตสไตล์ญี่ปุ่น", img: "https://images.unsplash.com/photo-1536256263959-770b48d82b0a?w=400&q=80" },
-            { id: 4, name: "Minimalist Table Lamp", price: 1200, detail: "โcmdไฟตั้งโต๊ะมินิมอล แสงนวลวอร์มไวท์", img: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=400&q=80" },
+            { id: 4, name: "Minimalist Table Lamp", price: 1200, detail: "โคมไฟตั้งโต๊ะมินิมอล แสงนวลวอร์มไวท์", img: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=400&q=80" },
             { id: 5, name: "Ceramic Coffee Cup", price: 350, detail: "แก้วเซรามิกแฮนด์เมด ทนความร้อนสูง", img: "https://images.unsplash.com/photo-1514218953589-2d7d37efd2ec?w=400&q=80" },
             { id: 6, name: "Analog Wristwatch", price: 4500, detail: "นาฬิกาข้อมือสายหนังแท้สไตล์วินเทจ", img: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=400&q=80" },
             { id: 7, name: "Cotton Tote Bag", price: 250, detail: "กระเป๋าผ้าแคนวาสรักษ์โลก แข็งแรงทนทาน", img: "https://images.unsplash.com/photo-1544816155-12df9643f363?w=400&q=80" },
@@ -280,7 +280,6 @@
             updateCartUI();
         }
 
-        // --- RENDER PRODUCTS (Responsive Image Size) ---
         function renderProducts() {
             const container = document.getElementById('product-list');
             container.innerHTML = PRODUCTS.map(p => `
