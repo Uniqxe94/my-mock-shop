@@ -34,7 +34,7 @@
         .dark input { background-color: #2d2d2d; color: white; border-color: #444; }
     </style>
 </head>
-<body class="theme-bg min-h-screen font-sans text-black dark:text-white transition-colors duration-200">
+<body class="theme-bg min-h-screen font-sans text-black dark:text-white transition-colors duration-200 relative">
 
     <nav id="user-navbar" class="theme-accent text-black p-3 sm:p-4 shadow-sm sticky top-0 z-50 hidden dark:bg-zinc-800 dark:text-white border-b border-black/10">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
@@ -74,11 +74,11 @@
 
     <div class="max-w-6xl mx-auto p-3 sm:p-4">
         
-        <div id="view-login" class="max-w-md mx-auto mt-6 sm:mt-12 bg-white p-5 sm:p-8 rounded-2xl shadow-sm border border-gray-200">
+        <div id="view-login" class="max-w-md mx-auto mt-6 sm:mt-12 bg-white p-5 sm:p-8 rounded-2xl shadow-sm border border-gray-200 relative pb-12">
             <div class="text-center mb-6">
                 <div class="inline-flex p-4 theme-accent rounded-full mb-3 text-black text-2xl"><i class="fa-solid fa-lock"></i></div>
                 <h2 class="text-2xl font-black tracking-tight">UNIQXE SHOP LOGIN</h2>
-                <p class="text-xs text-gray-500 mt-1">กรุณากรอกบัญชีผู้ใช้เพื่อทดสอบ Automation</p>
+                <p class="text-xs text-gray-500 mt-1">กรุณากรอกบัญชีผู้ใช้เพื่อเข้าสู่ระบบ</p>
             </div>
             <div id="login-error" class="text-red-500 text-sm mb-4 text-center font-bold"></div>
             <div class="space-y-4">
@@ -87,6 +87,8 @@
                 <button id="btn-login" onclick="login()" class="w-full bg-black text-white font-bold py-3 rounded-lg hover:bg-gray-800 transition text-sm">เข้าสู่ระบบ</button>
             </div>
             <p class="mt-6 text-center text-sm">ยังไม่มีบัญชี? <button id="btn-go-register" onclick="showView('register')" class="font-bold underline text-uniqxeDarkGreen">สมัครสมาชิกที่นี่</button></p>
+            
+            <div class="absolute bottom-3 right-4 text-[10px] text-gray-400 font-mono font-bold tracking-widest">v1.0.0</div>
         </div>
 
         <div id="view-register" class="max-w-lg mx-auto mt-6 bg-white p-5 sm:p-8 rounded-2xl shadow-sm border border-gray-200 hidden">
@@ -109,76 +111,4 @@
                 <input id="reg-password" type="password" placeholder="Password" class="w-full border p-2.5 rounded-lg text-sm">
                 <input id="reg-confirm-password" type="password" placeholder="Confirm Password" class="w-full border p-2.5 rounded-lg text-sm">
                 <input id="reg-phone" type="text" placeholder="เบอร์โทรศัพท์" class="w-full border p-2.5 rounded-lg text-sm">
-                <input id="reg-email" type="email" placeholder="อีเมล" class="w-full border p-2.5 rounded-lg text-sm">
-                <button id="btn-register" onclick="register()" class="w-full theme-accent font-black py-3 rounded-lg hover:opacity-80 text-black transition text-sm">ยืนยันสมัครสมาชิก</button>
-                <button onclick="showView('login')" class="w-full text-xs text-gray-500 underline mt-2">กลับไปหน้าล็อกอิน</button>
-            </div>
-        </div>
-
-        <div id="view-shop" class="mt-2 sm:mt-4 hidden">
-            <h2 class="text-xl sm:text-2xl font-black mb-4 sm:mb-6 text-black dark:text-white">
-                 รายการสินค้าทั้งหมด
-            </h2>
-            <div id="product-list" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6">
-                </div>
-        </div>
-
-        <div id="view-cart" class="max-w-2xl mx-auto mt-6 bg-white p-5 sm:p-8 rounded-2xl shadow-sm border border-gray-200 hidden">
-            <h2 class="text-xl font-black mb-6 flex items-center gap-2"><i class="fa-solid fa-cart-shopping"></i> ตะกร้าสินค้าของคุณ</h2>
-            <div id="cart-items-container" class="space-y-4 mb-6">
-                </div>
-
-            <div class="bg-zinc-50 p-3 sm:p-4 rounded-xl mb-6 border border-zinc-200 dark:bg-neutral-800 dark:border-neutral-700">
-                <label class="block text-xs font-bold text-gray-500 mb-2 dark:text-gray-400">โค้ดส่วนลดแนะนำ (ทดสอบ: UNIQXE10)</label>
-                <div class="flex gap-2">
-                    <input id="cart-coupon-input" type="text" placeholder="กรอกโค้ดส่วนลด" class="border p-2 rounded-lg flex-grow outline-none text-xs sm:text-sm dark:bg-neutral-700">
-                    <button id="btn-apply-coupon" onclick="applyCoupon()" class="bg-black text-white px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-bold hover:opacity-80 whitespace-nowrap">ใช้โค้ด</button>
-                </div>
-                <div id="coupon-message" class="text-xs mt-2 font-bold"></div>
-            </div>
-
-            <div class="border-t pt-4 space-y-2 text-xs sm:text-sm text-gray-700 dark:text-gray-300">
-                <div class="flex justify-between">
-                    <span>ราคารวมสินค้า:</span>
-                    <span id="subtotal-price">฿0</span>
-                </div>
-                <div class="flex justify-between text-red-500 font-bold">
-                    <span>ส่วนลดระบบ:</span>
-                    <span id="discount-price">-฿0</span>
-                </div>
-                <div class="flex justify-between items-center font-bold text-lg sm:text-xl text-black dark:text-white border-t pt-2">
-                    <span>ยอดชำระสุทธิทั้งหมด:</span>
-                    <span id="cart-total-price" class="text-uniqxeDarkGreen dark:text-uniqxeGreen">฿0</span>
-                </div>
-            </div>
-
-            <button id="btn-checkout" onclick="checkoutOrder()" class="w-full bg-black text-white font-black py-3 rounded-lg mt-6 hover:bg-gray-800 transition text-sm">ยืนยันสั่งซื้อสินค้า</button>
-            <button onclick="showView('shop')" class="w-full text-xs sm:text-sm text-gray-500 mt-4 underline text-center block">กลับไปเลือกสินค้าเพิ่ม</button>
-        </div>
-
-        <div id="view-profile" class="max-w-2xl mx-auto mt-6 bg-white p-5 sm:p-8 rounded-2xl shadow-sm border border-gray-200 hidden">
-            <h2 class="text-xl font-black mb-6 border-b pb-2">โปรไฟล์สมาชิก UNIQXE SHOP</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="space-y-4 text-xs sm:text-sm text-gray-700 dark:text-gray-300 md:border-r md:pr-4 border-gray-200">
-                    <h3 class="font-bold text-black dark:text-white text-sm sm:text-base"><i class="fa-solid fa-user"></i> ข้อมูลบัญชี</h3>
-                    <p><b>ชื่อ-นามสกุล:</b> <span id="prof-fullname"></span></p>
-                    <p><b>เพศ:</b> <span id="prof-gender"></span></p>
-                    <p><b>Username:</b> <span id="prof-username"></span></p>
-                    <p><b>เบอร์โทร:</b> <span id="prof-phone"></span></p>
-                    <p><b>อีเมล:</b> <span id="prof-email"></span></p>
-                </div>
-                <div class="border-t pt-4 md:border-t-0 md:pt-0 border-gray-100">
-                    <h3 class="font-bold mb-3 text-sm sm:text-base"><i class="fa-solid fa-clock-rotate-left"></i> ประวัติสั่งซื้อ</h3>
-                    <div id="order-history-container" class="space-y-3 max-h-60 overflow-y-auto pr-1 text-xs text-gray-500">
-                        </div>
-                </div>
-            </div>
-            <button onclick="showView('shop')" class="w-full mt-8 bg-gray-100 dark:bg-neutral-700 py-2 rounded-lg font-bold text-sm">กลับหน้าหลักร้านค้า</button>
-        </div>
-
-        <div id="view-admin" class="mt-6 hidden">
-            <div class="bg-white p-4 sm:p-8 rounded-2xl shadow-sm overflow-x-auto border border-gray-200">
-                <h2 class="text-xl font-black mb-6 text-red-600 font-mono">🛡️ Admin Dashboard</h2>
-                <table class="w-full text-left border-collapse min-w-[500px]">
-                    <thead>
-                        <tr class="bg-gray-100 dark:bg-neutral-800 text-
+                <input id="reg-email" type="email" placeholder="อีเมล" class="w-full border p
