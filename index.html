@@ -53,7 +53,7 @@
                 </div>
                 
                 <div class="flex items-center gap-3 sm:gap-4 border-l border-black/20 pl-3 sm:pl-6 dark:border-zinc-700">
-                    <span class="text-xs sm:text-sm truncate max-w-[120px] sm:max-w-none">คุณ: <button id="btn-view-profile" onclick="showView('profile')" class="font-bold underline hover:text-gray-700 dark:hover:text-gray-300"></button></span>
+                    <span class="text-xs sm:text-sm truncate max-w-[120px] sm:max-w-none">คุณ: <button id="btn-view-profile" onclick="showView('profile')" class="font-bold underline hover:text-gray-700 dark:hover:text-gray-300" id="profile-name-display"></button></span>
                     <button id="btn-logout" onclick="logout()" class="bg-black text-white px-2.5 py-1.5 rounded-md text-[10px] sm:text-xs font-bold hover:bg-gray-800 transition">ออกจากระบบ</button>
                 </div>
             </div>
@@ -61,13 +61,13 @@
     </nav>
 
     <div id="hero-banner" class="max-w-6xl mx-auto mt-4 px-3 sm:px-4 hidden">
-        <div class="relative rounded-2xl overflow-hidden h-48 sm:h-64 bg-zinc-900 border border-black/10 shadow-sm">
-            <div class="absolute inset-0 bg-cover bg-center opacity-85" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;800&quot; height=&quot;400&quot; viewBox=&quot;0 0 800 400&quot;><rect width=&quot;100%&quot; height=&quot;100%&quot; fill=&quot;%23A5D6A7&quot;/><text x=&quot;50%&quot; y=&quot;45%&quot; font-family=&quot;sans-serif&quot; font-weight=&quot;bold&quot; font-size=&quot;46&quot; fill=&quot;%23000000&quot; text-anchor=&quot;middle&quot;>UNIQXE SHOP</text><text x=&quot;50%&quot; y=&quot;60%&quot; font-family=&quot;sans-serif&quot; font-weight=&quot;bold&quot; font-size=&quot;24&quot; fill=&quot;%232E7D32&quot; text-anchor=&quot;middle&quot;>ช้อปสนุก สั่งง่าย!</text></svg>');">
-                <div class="w-full h-full bg-gradient-to-t from-black/50 via-transparent to-transparent absolute inset-0"></div>
+        <div class="relative rounded-2xl overflow-hidden h-48 sm:h-64 bg-zinc-900 border border-black/10 shadow-sm flex items-center justify-center">
+            <div class="absolute inset-0 bg-cover bg-center opacity-90" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;1200&quot; height=&quot;400&quot; viewBox=&quot;0 0 1200 400&quot;><rect width=&quot;100%&quot; height=&quot;100%&quot; fill=&quot;%23A5D6A7&quot;/><circle cx=&quot;150&quot; cy=&quot;100&quot; r=&quot;80&quot; fill=&quot;%23E8F5E9&quot; opacity=&quot;0.6&quot/><circle cx=&quot;1050&quot; cy=&quot;300&quot; r=&quot;120&quot; fill=&quot;%232E7D32&quot; opacity=&quot;0.15&quot/><g transform=&quot;translate(420,120)&quot;><rect width=&quot;360&quot; height=&quot;120&quot; rx=&quot;20&quot; fill=&quot;%23000000&quot/><text x=&quot;180&quot; y=&quot;55&quot; font-family=&quot;sans-serif&quot; font-weight=&quot;900&quot; font-size=&quot;38&quot; fill=&quot;%23FFFFFF&quot; text-anchor=&quot;middle&quot;>UNIQXE SHOP</text><text x=&quot;180&quot; y=&quot;95&quot; font-family=&quot;sans-serif&quot; font-weight=&quot;bold&quot; font-size=&quot;22&quot; fill=&quot;%23A5D6A7&quot; text-anchor=&quot;middle&quot;>ช้อปสนุก สั่งง่าย!</text></g><circle cx=&quot;200&quot; cy=&quot;280&quot; r=&quot;15&quot; fill=&quot;%23FFD54F&quot/><circle cx=&quot;950&quot; cy=&quot;90&quot; r=&quot;25&quot; fill=&quot;%23FFD54F&quot/></svg>');">
+                <div class="w-full h-full bg-gradient-to-t from-black/40 via-transparent to-transparent absolute inset-0"></div>
             </div>
             <div class="absolute bottom-4 left-6 text-white z-10 hidden sm:block">
-                <span class="bg-black text-uniqxeGreen text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">Official Store</span>
-                <p class="text-xs text-gray-200 mt-1">ยินดีต้อนรับเข้าสู่ระบบจำลองสั่งซื้อสินค้า</p>
+                <span class="bg-black text-uniqxeGreen text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">Welcome Creator</span>
+                <p class="text-xs text-gray-100 mt-1">ระบบทดสอบซื้อขายสินค้าอัตโนมัติ (Automation Sandbox)</p>
             </div>
         </div>
     </div>
@@ -204,9 +204,9 @@
     </div>
 
     <script>
-        // --- 🟩 ฝังโค้ด SVG Base64 ให้แสดงผลรูปสินค้าพาสเทลแน่นอน 🟩 ---
-        const mintImg = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'><rect width='100%' height='100%' fill='%23A5D6A7'/><text x='50%' y='55%' font-family='sans-serif' font-weight='bold' font-size='28' fill='%23000000' text-anchor='middle'>Product 1</text></svg>";
-        const greyImg = (num) => `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'><rect width='100%' height='100%' fill='%23E0E0E0'/><text x='50%' y='55%' font-family='sans-serif' font-weight='bold' font-size='28' fill='%23000000' text-anchor='middle'>Product ${num}</text></svg>`;
+        // --- 🟩 ปรับแก้ระบบรูปภาพตามรูปภาพหน้าจอตัวอย่างให้สมบูรณ์ 🟩 ---
+        const mintImg = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'><rect width='100%' height='100%' fill='%23A5D6A7'/><text x='50%' y='55%' font-family='sans-serif' font-weight='bold' font-size='32' fill='%23000000' text-anchor='middle'>Product 1</text></svg>";
+        const greyImg = (num) => `data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'><rect width='100%' height='100%' fill='%23E0E0E0'/><text x='50%' y='55%' font-family='sans-serif' font-weight='bold' font-size='32' fill='%23000000' text-anchor='middle'>Product ${num}</text></svg>`;
 
         const PRODUCTS = [
             { id: 1, name: "Vespa Sprint 150", price: 1500, detail: "โมเดลรถจิ๋วสีมิ้นต์สุดคลาสสิก", img: mintImg },
@@ -218,17 +218,7 @@
             { id: 7, name: "Cotton Tote Bag", price: 250, detail: "กระเป๋าผ้ารักษ์โลก จุของได้เยอะ", img: greyImg(7) },
             { id: 8, name: "Wireless Earbuds", price: 1900, detail: "หูฟังไร้สาย เบสแน่น ตัดเสียงรบกวน", img: greyImg(8) },
             { id: 9, name: "Planner Notebook", price: 490, detail: "สมุดบันทึกแพลนเนอร์ ปกหนังพรีเมียม", img: greyImg(9) },
-            { id: 10, name: "Green Tea Candle", price: 390, detail: "เทียนหอมกลิ่นชาเขียว ผ่อนคลายสมอง", img: greyImg(10) },
-            { id: 11, name: "Succulent Pot", price: 120, detail: "กระถางต้นไม้จิ๋ว ตั้งโต๊ะเพิ่มความสดชื่น", img: greyImg(11) },
-            { id: 12, name: "Leather Wallet", price: 890, detail: "กระเป๋าสตางค์ใบสั้น ช่องใส่บัตรเยอะ", img: greyImg(12) },
-            { id: 13, name: "Glass Water Bottle", price: 450, detail: "ขวดน้ำแก้วสไตล์สปอร์ต พกพาสะดวก", img: greyImg(13) },
-            { id: 14, name: "Eco-friendly Pen", price: 50, detail: "ปากกาลูกลื่น ทำจากวัสดุรีไซเคิล", img: greyImg(14) },
-            { id: 15, name: "Desk Mat (Mint)", price: 650, detail: "แผ่นรองโต๊ะทำงานขนาดใหญ่ กันน้ำได้", img: greyImg(15) },
-            { id: 16, name: "Canvas Sneakers", price: 1250, detail: "รองเท้าผ้าใบ นุ่มสบายเท้าทุกก้าว", img: greyImg(16) },
-            { id: 17, name: "Table Fan", price: 790, detail: "พัดลมตั้งโต๊ะพกพา ปรับแรงลมได้เยอะ", img: greyImg(17) },
-            { id: 18, name: "Coffee Dripper", price: 550, detail: "ถ้วยดริปกาแฟเซรามิกสไตล์สโลว์ไลฟ์", img: greyImg(18) },
-            { id: 19, name: "Sunglasses", price: 1100, detail: "แว่นตากันแดดทรงเหลี่ยม ป้องกัน UV400", img: greyImg(19) },
-            { id: 20, name: "Oil Diffuser", price: 1450, detail: "เครื่องพ่นไอน้ำอโรมาระบบอัลตราโซนิก", img: greyImg(20) }
+            { id: 10, name: "Green Tea Candle", price: 390, detail: "เทียนหอมกลิ่นชาเขียว ผ่อนคลายสมอง", img: greyImg(10) }
         ];
 
         // --- STATE MANAGEMENT ---
@@ -236,15 +226,15 @@
         let discountRate = 0;
         let isDarkMode = false;
         
-        // สร้างบัญชีผู้ใช้เริ่มต้นสำหรับทดสอบระบบ
+        // เซ็ตอัปบัญชีเริ่มต้นใน LocalStorage สำหรับระบบ Automation Test
         if(!localStorage.getItem('user_admin')) {
             localStorage.setItem('user_admin', JSON.stringify({
                 firstname: "ผู้ดูแล", lastname: "ระบบ", username: "admin", password: "1234", gender: "อื่นๆ", phone: "000", email: "admin@uniqxe.com", history: []
             }));
         }
-        if(!localStorage.getItem('user_testuser')) {
-            localStorage.setItem('user_testuser', JSON.stringify({
-                firstname: "ทดสอบ", lastname: "ระบบ", username: "testuser", password: "1234", gender: "ชาย", phone: "0999999999", email: "test@uniqxe.com", history: []
+        if(!localStorage.getItem('user_Saranyoo')) {
+            localStorage.setItem('user_Saranyoo', JSON.stringify({
+                firstname: "ศรัญยู", lastname: "เรืองเสมอ", username: "Saranyoo", password: "1234", gender: "ชาย", phone: "0812345678", email: "saranyoo@uniqxe.com", history: []
             }));
         }
 
@@ -252,25 +242,6 @@
             if (event.key === "Enter") {
                 event.preventDefault();
                 login();
-            }
-        }
-
-        function addToCart(productId) {
-            const product = PRODUCTS.find(p => p.id === productId);
-            if (product) {
-                cart.push(product);
-                updateCartUI();
-                
-                const btn = document.getElementById(`btn-add-${productId}`);
-                if(btn) {
-                    const originalText = btn.innerText;
-                    btn.innerText = "✓ เพิ่มแล้ว";
-                    btn.classList.replace('bg-black', 'bg-green-700');
-                    setTimeout(() => {
-                        btn.innerText = originalText;
-                        btn.classList.replace('bg-green-700', 'bg-black');
-                    }, 800);
-                }
             }
         }
 
@@ -308,15 +279,21 @@
         }
 
         function login() {
-            const u = document.getElementById('login-username').value;
+            const u = document.getElementById('login-username').value.trim();
             const p = document.getElementById('login-password').value;
             const err = document.getElementById('login-error');
 
-            const stored = localStorage.getItem('user_'+u);
+            if(!u || !p) {
+                err.innerText = "กรุณากรอกข้อมูลให้ครบถ้วน";
+                return;
+            }
+
+            const stored = localStorage.getItem('user_' + u);
             if(stored) {
                 const user = JSON.parse(stored);
                 if(user.password === p) {
                     localStorage.setItem('session', u);
+                    err.innerText = ""; // ล้างค่าความผิดพลาดเก่า
                     initSession(u);
                     return;
                 }
@@ -325,10 +302,12 @@
         }
 
         function initSession(username) {
-            const user = JSON.parse(localStorage.getItem('user_'+username));
-            document.getElementById('user-navbar').classList.remove('hidden');
-            document.getElementById('hero-banner').classList.remove('hidden');
-            document.getElementById('btn-view-profile').innerText = user.username;
+            const user = JSON.parse(localStorage.getItem('user_' + username));
+            if(!user) return;
+
+            // ผูกข้อมูลเข้าสู่ระบบเข้ากับ Navbar และ Profile View
+            const profileBtn = document.getElementById('btn-view-profile');
+            if(profileBtn) profileBtn.innerText = user.username;
             
             document.getElementById('prof-fullname').innerText = user.firstname + " " + user.lastname;
             document.getElementById('prof-gender').innerText = user.gender;
@@ -337,20 +316,21 @@
             document.getElementById('prof-email').innerText = user.email;
 
             renderOrderHistory(user.history || []);
+            renderProducts();
+            updateCartUI();
 
+            // เลือกว่าจะแสดงแดชบอร์ดตามระดับผู้ใช้งาน
             if(username === 'admin') { 
                 showView('admin'); 
                 renderAdminTable(); 
             } else { 
                 showView('shop'); 
             }
-            
-            renderProducts();
-            updateCartUI();
         }
 
         function renderProducts() {
             const container = document.getElementById('product-list');
+            if(!container) return;
             container.innerHTML = PRODUCTS.map(p => `
                 <div class="bg-white p-4 rounded-2xl border border-gray-200/60 flex flex-col transition-all duration-200 hover:shadow-sm" id="product-${p.id}">
                     <div class="relative overflow-hidden rounded-xl mb-3 aspect-[4/3] bg-gray-100 flex items-center justify-center">
@@ -364,6 +344,25 @@
                     </div>
                 </div>
             `).join('');
+        }
+
+        function addToCart(productId) {
+            const product = PRODUCTS.find(p => p.id === productId);
+            if (product) {
+                cart.push(product);
+                updateCartUI();
+                
+                const btn = document.getElementById(`btn-add-${productId}`);
+                if(btn) {
+                    const originalText = btn.innerText;
+                    btn.innerText = "✓ เพิ่มแล้ว";
+                    btn.classList.replace('bg-black', 'bg-green-700');
+                    setTimeout(() => {
+                        btn.innerText = originalText;
+                        btn.classList.replace('bg-green-700', 'bg-black');
+                    }, 800);
+                }
+            }
         }
 
         function applyCoupon() {
@@ -382,8 +381,11 @@
         }
 
         function updateCartUI() {
-            document.getElementById('cart-badge-count').innerText = cart.length;
+            const badge = document.getElementById('cart-badge-count');
+            if(badge) badge.innerText = cart.length;
+            
             const container = document.getElementById('cart-items-container');
+            if(!container) return;
             
             if(cart.length === 0) {
                 container.innerHTML = `<p class="text-center text-gray-400 py-10 text-sm">ไม่มีสินค้าในตะกร้าของคุณเลย</p>`;
@@ -459,6 +461,7 @@
 
         function renderOrderHistory(history) {
             const container = document.getElementById('order-history-container');
+            if(!container) return;
             if(!history || history.length === 0) {
                 container.innerHTML = `<p class="text-gray-400 text-center py-4">ยังไม่มีประวัติการสั่งซื้อเลยครับ</p>`;
                 return;
@@ -476,6 +479,7 @@
 
         function renderAdminTable() {
             const tbody = document.getElementById('admin-user-table');
+            if(!tbody) return;
             tbody.innerHTML = "";
             for(let i=0; i<localStorage.length; i++) {
                 const key = localStorage.key(i);
@@ -504,26 +508,31 @@
 
         function showView(viewId) {
             const views = ['view-login', 'view-register', 'view-shop', 'view-cart', 'view-profile', 'view-admin'];
+            
+            // ซ่อนทุกหน้าจอก่อนเป็นอันดับแรก
             views.forEach(v => {
                 const el = document.getElementById(v);
                 if(el) el.classList.add('hidden');
             });
             
+            // เปิดหน้าจอปลายทางที่ต้องการกางออกใช้งาน
             const targetView = document.getElementById('view-' + viewId);
             if(targetView) targetView.classList.remove('hidden');
             
             const banner = document.getElementById('hero-banner');
             const navbar = document.getElementById('user-navbar');
             
+            // ตรวจสอบการแสดงผลของ Navbar และ Banner ด้านบนตามตำแหน่ง View
             if(viewId === 'login' || viewId === 'register') {
                 if(banner) banner.classList.add('hidden');
                 if(navbar) navbar.classList.add('hidden');
-            } else if (localStorage.getItem('session')) {
+            } else {
                 if(banner) banner.classList.remove('hidden');
                 if(navbar) navbar.classList.remove('hidden');
             }
         }
 
+        // ตัวคัดกรองสิทธิ์และสถานะ Session การเข้าใช้งานเมื่อเริ่มเปิดโปรแกรม
         window.onload = function() {
             const session = localStorage.getItem('session');
             if(session) {
