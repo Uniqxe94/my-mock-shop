@@ -329,4 +329,119 @@
                         <img src="${p.img}" class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg object-cover border border-gray-200 flex-shrink-0">
                         <div class="min-w-0">
                             <p class="font-bold text-xs sm:text-sm truncate">${p.name}</p>
-                            <p class="text-[11px] sm:text-xs text-gray-5
+                            <p class="text-[11px] sm:text-xs text-gray-500">฿${p.price.toLocaleString()}</p>
+                        </div>
+                    </div>
+                    <button onclick="removeFromCart(${idx})" class="text-red-500 hover:text-red-700 p-1 flex-shrink-0"><i class="fa-solid fa-trash text-sm"></i></button>
+                </div>
+            `).join('');
+
+            const subtotal = cart.reduce((sum, p) => sum + p.price, 0);
+            const discount = subtotal * discountRate;
+            const total = subtotal - discount;
+
+            document.getElementById('subtotal-price').innerText = "฿" + subtotal.toLocaleString();
+            document.getElementById('discount-price').innerText = "-฿" + discount.toLocaleString();
+            document.getElementById('cart-total-price').innerText = "฿" + total.toLocaleString();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function checkoutOrder() {
+            if(cart.length === 0) { alert('กรุณาเลือกสินค้าก่อนเช็คเอาท์'); return; }
+            
+            const currentSession = localStorage.getItem('session');
+            const user = JSON.parse(localStorage.getItem('user_' + currentSession));
+            
+            const orderId = "UNQ-" + Math.floor(100000 + Math.random() * 900000);
+            const subtotal = cart.reduce((sum, p) => sum + p.price, 0);
+            const finalTotal = subtotal - (subtotal * discountRate);
+
+            const newOrder = {
+                orderId: orderId,
+                itemsCount: cart.length,
+                total: finalTotal,
+                date: new Date().toLocaleDateString('th-TH')
+            };
+
+            if(!user.history) user.history = [];
+            user.history.unshift(newOrder); 
+            localStorage.setItem('user_' + currentSession, JSON.stringify(user));
+
+            cart = [];
+            discountRate = 0;
+            document.getElementById('cart-coupon-input').value = "";
+            document.getElementById('coupon-message').innerText = "";
+            updateCartUI();
+
+            document.getElementById('modal-order-id').innerText = orderId;
+            document.getElementById('success-modal').classList.remove('hidden');
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('success-modal').classList.add('hidden');
+            const currentSession = localStorage.getItem('session');
+            initSession(currentSession);
+        }
+
+        function renderOrderHistory(history) {
+            const container = document.getElementById('order-history-container');
+            if(!history || history.length === 0) {
+                container.innerHTML = `<p class="text-gray-400 text-center py-4">ยังไม่มีประวัติการสั่งซื้อ</p>`;
+                return;
+            }
+            container.innerHTML = history.map(h => `
+                <div class="p-2 border rounded-lg bg-gray-50 flex justify-between items-center mb-1">
+                    <div>
+                        <span class="font-mono font-bold text-black dark:text-white block text-xs">${h.orderId}</span>
+                        <span class="text-[10px] text-gray-400">${h.date} (${h.itemsCount} ชิ้น)</span>
+                    </div>
+                    <span class="font-bold text-green-700 dark:text-green-400 text-xs">฿${h.total.toLocaleString()}</span>
+                </div>
+            `).join('');
+        }
+
+        function renderAdminTable() {
+            const tbody = document.getElementById('admin-user-table');
+            tbody.innerHTML = "";
+            for(let i=0; i<localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if(key.startsWith('user_')) {
+                    const user = JSON.parse(localStorage.getItem(key));
+                    if(user.username === 'admin') continue;
+                    tbody.innerHTML += `
+                        <tr class="border-b text-xs sm:text-sm">
+                            <td class="p-2 sm:p-3">${user.firstname} ${user.lastname}</td>
+                            <td class="p-2 sm:p-3 font-bold">${user.username}</td>
+                            <td class="p-2 sm:p-3"><button id="btn-del-${user.username}" onclick="deleteUser('${user.username}')" class="text-red-500 font-bold underline">ลบออก</button></td>
+                        </tr>
+                    `;
+                }
+            }
+        }
+
+        function deleteUser(u) {
+            if(confirm('ลบผู้ใช้ '+u+'?')) { localStorage.removeItem('user_'+u); renderAdminTable(); }
+        }
+
+        function logout() {
+            localStorage.removeItem('session');
+            location.reload();
+        }
+
+        function showView(viewId) {
+            const views = ['view-login', 'view-register', 'view-shop', 'view-cart', 'view-profile', 'view-admin'];
+            views.forEach(v => document.getElementById(v).classList.add('hidden'));
+            document.getElementById('view-' + viewId).classList.remove('hidden');
+        }
+
+        window.onload = function() {
+            const session = localStorage.getItem('session');
+            if(session) initSession(session);
+        }
+    </script>
+</body>
+</html>
