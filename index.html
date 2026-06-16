@@ -2,113 +2,101 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>UNIQXE SHOP - ช้อปสนุก SHOP</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNIQXE SHOP - v1.0.1</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        uniqxeMint: '#E8F5E9',
-                        uniqxeGreen: '#A5D6A7',
-                        uniqxeDarkGreen: '#2E7D32',
-                    }
-                }
-            }
-        }
-    </script>
     <style>
-        .theme-bg { background-color: #E8F5E9; }
-        .theme-accent { background-color: #A5D6A7; }
         .hidden { display: none !important; }
-        .cart-badge { position: absolute; top: -5px; right: -8px; background: #000000; color: white; border-radius: 50%; padding: 1px 5px; font-size: 10px; font-weight: bold; }
-        
-        .dark .theme-bg { background-color: #121212; color: #ffffff; }
-        .dark .bg-white { background-color: #1e1e1e; color: #ffffff; border-color: #333; }
-        .dark .text-gray-700 { color: #e0e0e0; }
-        .dark .text-gray-500 { color: #aaa; }
-        .dark .bg-gray-50 { background-color: #2d2d2d; }
-        .dark input { background-color: #2d2d2d; color: white; border-color: #444; }
+        .bg-custom { background-color: #E8F5E9; }
     </style>
 </head>
-<body class="theme-bg min-h-screen font-sans text-black dark:text-white transition-colors duration-200 relative">
+<body class="bg-custom min-h-screen font-sans">
 
-    <nav id="user-navbar" class="theme-accent text-black p-3 sm:p-4 shadow-sm sticky top-0 z-50 hidden dark:bg-zinc-800 dark:text-white border-b border-black/10">
+    <nav id="nav-bar" class="bg-[#A5D6A7] p-4 shadow-sm hidden">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
-            <div id="web-logo" class="font-black text-xl sm:text-2xl tracking-tight cursor-pointer" onclick="showView('shop')">
-                UNIQXE SHOP
-            </div>
-            
-            <div class="flex items-center gap-4 sm:gap-6">
-                <button id="btn-toggle-dark" onclick="toggleDarkMode()" class="text-lg sm:text-xl p-1 hover:opacity-70">
-                    <i id="dark-icon" class="fa-solid fa-moon"></i>
-                </button>
-
-                <div class="relative cursor-pointer" id="btn-cart-modal" onclick="showView('cart')">
-                    <i class="fa-solid fa-cart-shopping text-lg sm:text-xl"></i>
-                    <span id="cart-badge-count" class="cart-badge">0</span>
-                </div>
-                
-                <div class="flex items-center gap-3 sm:gap-4 border-l border-black/20 pl-3 sm:pl-6 dark:border-zinc-700">
-                    <span class="text-xs sm:text-sm truncate max-w-[120px] sm:max-w-none">คุณ: <button id="btn-view-profile" onclick="showView('profile')" class="font-bold underline hover:text-gray-700 dark:hover:text-gray-300" id="profile-name-display"></button></span>
-                    <button id="btn-logout" onclick="logout()" class="bg-black text-white px-2.5 py-1.5 rounded-md text-[10px] sm:text-xs font-bold hover:bg-gray-800 transition">ออกจากระบบ</button>
-                </div>
+            <h1 class="font-black text-xl tracking-tighter">UNIQXE SHOP</h1>
+            <div class="flex gap-4 items-center">
+                <span id="user-display" class="font-bold text-sm"></span>
+                <button onclick="logout()" class="bg-black text-white px-3 py-1 rounded-md text-xs font-bold hover:opacity-80">ออกจากระบบ</button>
             </div>
         </div>
     </nav>
 
-    <div id="hero-banner" class="max-w-6xl mx-auto mt-4 px-3 sm:px-4 hidden">
-        <div class="relative rounded-2xl overflow-hidden h-48 sm:h-64 bg-zinc-900 border border-black/10 shadow-sm flex items-center justify-center">
-            <div class="absolute inset-0 bg-cover bg-center opacity-90" style="background-image: url('data:image/svg+xml;utf8,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;1200&quot; height=&quot;400&quot; viewBox=&quot;0 0 1200 400&quot;><rect width=&quot;100%&quot; height=&quot;100%&quot; fill=&quot;%23A5D6A7&quot;/><circle cx=&quot;150&quot; cy=&quot;100&quot; r=&quot;80&quot; fill=&quot;%23E8F5E9&quot; opacity=&quot;0.6&quot/><circle cx=&quot;1050&quot; cy=&quot;300&quot; r=&quot;120&quot; fill=&quot;%232E7D32&quot; opacity=&quot;0.15&quot/><g transform=&quot;translate(420,120)&quot;><rect width=&quot;360&quot; height=&quot;120&quot; rx=&quot;20&quot; fill=&quot;%23000000&quot/><text x=&quot;180&quot; y=&quot;55&quot; font-family=&quot;sans-serif&quot; font-weight=&quot;900&quot; font-size=&quot;38&quot; fill=&quot;%23FFFFFF&quot; text-anchor=&quot;middle&quot;>UNIQXE SHOP</text><text x=&quot;180&quot; y=&quot;95&quot; font-family=&quot;sans-serif&quot; font-weight=&quot;bold&quot; font-size=&quot;22&quot; fill=&quot;%23A5D6A7&quot; text-anchor=&quot;middle&quot;>ช้อปสนุก สั่งง่าย!</text></g><circle cx=&quot;200&quot; cy=&quot;280&quot; r=&quot;15&quot; fill=&quot;%23FFD54F&quot/><circle cx=&quot;950&quot; cy=&quot;90&quot; r=&quot;25&quot; fill=&quot;%23FFD54F&quot/></svg>');">
-                <div class="w-full h-full bg-gradient-to-t from-black/40 via-transparent to-transparent absolute inset-0"></div>
-            </div>
-            <div class="absolute bottom-4 left-6 text-white z-10 hidden sm:block">
-                <span class="bg-black text-uniqxeGreen text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">Welcome Creator</span>
-                <p class="text-xs text-gray-100 mt-1">ระบบทดสอบซื้อขายสินค้าอัตโนมัติ (Automation Sandbox)</p>
-            </div>
+    <div id="view-login" class="max-w-sm mx-auto mt-20 p-8 bg-white rounded-3xl shadow-xl border border-gray-100 relative">
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-black mb-2">UNIQXE</h2>
+            <p class="text-gray-400 text-sm">เข้าสู่ระบบเพื่อเริ่มช้อป</p>
         </div>
+        
+        <div id="error-msg" class="text-red-500 text-xs mb-4 text-center font-bold h-4"></div>
+        
+        <input id="in-user" type="text" placeholder="Username (ลอง: Saranyoo)" class="w-full border-2 border-gray-100 p-3 rounded-xl mb-3 outline-none focus:border-green-400">
+        <input id="in-pass" type="password" placeholder="Password (1234)" class="w-full border-2 border-gray-100 p-3 rounded-xl mb-6 outline-none focus:border-green-400">
+        
+        <button onclick="performLogin()" class="w-full bg-black text-white py-3 rounded-xl font-bold hover:bg-gray-800 transition">เข้าสู่ระบบ</button>
+        
+        <div class="absolute bottom-4 right-6 text-[10px] text-gray-300 font-mono font-bold">v1.0.0</div>
     </div>
 
-    <div class="max-w-6xl mx-auto p-3 sm:p-4">
-        
-        <div id="view-login" class="max-w-md mx-auto mt-6 sm:mt-12 bg-white p-5 sm:p-8 rounded-2xl shadow-sm border border-gray-200 relative pb-12">
-            <div class="text-center mb-6">
-                <div class="inline-flex p-4 theme-accent rounded-full mb-3 text-black text-2xl"><i class="fa-solid fa-lock"></i></div>
-                <h2 class="text-2xl font-black tracking-tight">UNIQXE SHOP LOGIN</h2>
-                <p class="text-xs text-gray-500 mt-1">กรุณากรอกบัญชีผู้ใช้เพื่อเข้าสู่ระบบ</p>
+    <div id="view-shop" class="max-w-6xl mx-auto p-6 hidden">
+        <h2 class="text-2xl font-black mb-8">คลังสินค้าแนะนำ</h2>
+        <div id="product-grid" class="grid grid-cols-2 md:grid-cols-4 gap-6">
             </div>
-            <div id="login-error" class="text-red-500 text-sm mb-4 text-center font-bold"></div>
-            <div class="space-y-4">
-                <input id="login-username" type="text" placeholder="Username" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-uniqxeGreen outline-none text-sm">
-                <input id="login-password" type="password" placeholder="Password" class="w-full border p-3 rounded-lg focus:ring-2 focus:ring-uniqxeGreen outline-none text-sm" onkeypress="handleLoginEnter(event)">
-                <button id="btn-login" onclick="login()" class="w-full bg-black text-white font-bold py-3 rounded-lg hover:bg-gray-800 transition text-sm">เข้าสู่ระบบ</button>
-            </div>
-            <p class="mt-6 text-center text-sm">ยังไม่มีบัญชี? <button id="btn-go-register" onclick="showView('register')" class="font-bold underline text-uniqxeDarkGreen">สมัครสมาชิกที่นี่</button></p>
-            
-            <div class="absolute bottom-3 right-4 text-[10px] text-gray-400 font-mono font-bold tracking-widest">v1.0.0</div>
-        </div>
+    </div>
 
-        <div id="view-register" class="max-w-lg mx-auto mt-6 bg-white p-5 sm:p-8 rounded-2xl shadow-sm border border-gray-200 hidden">
-            <h2 class="text-xl font-black mb-6 text-center text-gray-800">สมัครสมาชิกใหม่</h2>
-            <div id="reg-error" class="text-red-500 text-sm mb-4 text-center font-bold"></div>
-            <div class="grid grid-cols-2 gap-3 mb-3">
-                <input id="reg-firstname" type="text" placeholder="ชื่อจริง" class="border p-2.5 rounded-lg text-sm">
-                <input id="reg-lastname" type="text" placeholder="นามสกุล" class="border p-2.5 rounded-lg text-sm">
-            </div>
-            <div class="p-3 border rounded-lg mb-3 bg-gray-50">
-                <span class="text-xs text-gray-500 block mb-1">เลือกเพศ</span>
-                <div class="flex gap-4 text-sm">
-                    <label class="cursor-pointer"><input type="radio" name="gender" value="ชาย" checked> ชาย</label>
-                    <label class="cursor-pointer"><input type="radio" name="gender" value="หญิง"> หญิง</label>
-                    <label class="cursor-pointer"><input type="radio" name="gender" value="อื่นๆ"> อื่นๆ</label>
-                </div>
-            </div>
-            <div class="space-y-3">
-                <input id="reg-username" type="text" placeholder="Username" class="w-full border p-2.5 rounded-lg text-sm">
-                <input id="reg-password" type="password" placeholder="Password" class="w-full border p-2.5 rounded-lg text-sm">
-                <input id="reg-confirm-password" type="password" placeholder="Confirm Password" class="w-full border p-2.5 rounded-lg text-sm">
-                <input id="reg-phone" type="text" placeholder="เบอร์โทรศัพท์" class="w-full border p-2.5 rounded-lg text-sm">
-                <input id="reg-email" type="email" placeholder="อีเมล" class="w-full border p
+    <script>
+        // Data
+        const PRODUCTS = [
+            { id: 1, name: "New Vespa Sprint", price: "125,000", img: "https://picsum.photos/seed/vespa/400/400" },
+            { id: 2, name: "Fix Gear Frame", price: "15,900", img: "https://picsum.photos/seed/fixgear/400/400" },
+            { id: 3, name: "Art Creator Kit", price: "2,500", img: "https://picsum.photos/seed/art/400/400" },
+            { id: 4, name: "YoungTrips Cap", price: "590", img: "https://picsum.photos/seed/cap/400/400" }
+        ];
+
+        // Init User
+        if(!localStorage.getItem('user_Saranyoo')) {
+            localStorage.setItem('user_Saranyoo', JSON.stringify({username: 'Saranyoo', pass: '1234'}));
+        }
+
+        // Logic
+        function performLogin() {
+            const u = document.getElementById('in-user').value;
+            const p = document.getElementById('in-pass').value;
+            const data = localStorage.getItem('user_' + u);
+            
+            if(data && JSON.parse(data).pass === p) {
+                localStorage.setItem('session', u);
+                window.location.reload();
+            } else {
+                document.getElementById('error-msg').innerText = "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
+            }
+        }
+
+        function renderApp() {
+            const session = localStorage.getItem('session');
+            if(session) {
+                document.getElementById('view-login').classList.add('hidden');
+                document.getElementById('nav-bar').classList.remove('hidden');
+                document.getElementById('view-shop').classList.remove('hidden');
+                document.getElementById('user-display').innerText = "สวัสดี, " + session;
+                
+                const grid = document.getElementById('product-grid');
+                grid.innerHTML = PRODUCTS.map(p => `
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border hover:shadow-md transition">
+                        <img src="${p.img}" class="rounded-xl mb-4 w-full aspect-square object-cover">
+                        <p class="font-bold text-sm">${p.name}</p>
+                        <p class="text-xs text-gray-400 mt-1">฿${p.price}</p>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('session');
+            window.location.reload();
+        }
+
+        window.onload = renderApp;
+    </script>
+</body>
+</html>
